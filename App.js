@@ -1,20 +1,35 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { NavigationContainer } from "@react-navigation/native";
+import { Feather } from "@expo/vector-icons";
+import Home from './Screens/Home';
+import Profil from './Screens/Profil';
+import AboutUs from "./Screens/AboutUs";
+import ContactUs from "./Screens/ContactUs";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+const Drawer = createDrawerNavigator();
+
+
+export default function App () {
+  return(
+    <NavigationContainer>
+      <Drawer.Navigator screenOptions={{ headerShown : true}}>
+        <Drawer.Screen 
+            name="Home" 
+            component={Home}
+            options = {{ drawerIcon: ({tintColor}) => <Feather name="home" size={16} color={tintColor} /> }} />
+        <Drawer.Screen 
+            name="Profil" 
+            component={Profil}
+            options = {{ drawerIcon: ({tintColor}) => <Feather name="user" size={16} color={tintColor} /> }} />
+        <Drawer.Screen
+            name="A propos"
+            component={AboutUs}
+            options = {{drawerIcon: ({tintColor}) => <Feather name="info" size={16} color={tintColor} />}} />
+        <Drawer.Screen
+            name="Contact"
+            component={ContactUs}
+            options = {{drawerIcon: ({tintColor}) => <Feather name="mail" size={16} color={tintColor} />}} />
+      </Drawer.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
