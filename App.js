@@ -6,6 +6,8 @@ import Profil from './Screens/Profil';
 import AboutUs from "./Screens/AboutUs";
 import ContactUs from "./Screens/ContactUs";
 import CalendarScreen from "./Screens/Calendar";  
+import AddEvent from "./Screens/AddEvent";
+import DelEvent from "./Screens/DelEvent";
 import Exit from "./Screens/Exit";
 import 'setimmediate'; // or import 'next-tick';
 import React, { useState, useEffect, useDebugValue } from 'react';
@@ -92,6 +94,14 @@ export default function App () {
               name="Exit"
               component={Exit}
               options = {{drawerIcon: ({tintColor}) => <Feather name="log-out" size={16} color={tintColor} />}}/>
+          <Drawer.Screen 
+              name="Add"
+              component={AddEvent}
+              options = {{drawerIcon: ({tintColor}) => <Feather name="plus" size={16} color={tintColor} />}}/>
+          <Drawer.Screen 
+              name="Delete"
+              component={DelEvent}
+              options = {{drawerIcon: ({tintColor}) => <Feather name="minus" size={16} color={tintColor} />}}/>
         </Drawer.Navigator>
       </NavigationContainer>
   );
