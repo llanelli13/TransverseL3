@@ -9,7 +9,11 @@ import CalendarScreen from "./Screens/Calendar";
 import AddEvent from "./Screens/AddEvent";
 import DelEvent from "./Screens/DelEvent";
 import Exit from "./Screens/Exit";
-import 'setimmediate'; // or import 'next-tick';
+import Inscription from "./Screens/Inscription";
+import Connexion from "./Screens/Connexion";
+import PresenceComponent from "./Screens/Presence";
+import 'setimmediate';
+import 'next-tick';
 import React, { useState, useEffect, useDebugValue } from 'react';
 import { AppRegistry } from 'react-native';
 import SQLite from 'react-native-sqlite-storage';
@@ -69,7 +73,9 @@ export default function App () {
 
   return(
       <NavigationContainer>
-        <Drawer.Navigator screenOptions={{ headerShown : true}}>
+        <Drawer.Navigator screenOptions={{headerShown : true, 
+                                          //headerStyle: {backgroundColor: 'lightgray'},
+                                        }}>
           <Drawer.Screen 
               name="Home" 
               component={Home}
@@ -101,6 +107,18 @@ export default function App () {
           <Drawer.Screen 
               name="Delete"
               component={DelEvent}
+              options = {{drawerIcon: ({tintColor}) => <Feather name="minus" size={16} color={tintColor} />}}/>
+          <Drawer.Screen 
+              name="Connexion"
+              component={Connexion}
+              options = {{drawerIcon: ({tintColor}) => <Feather name="minus" size={16} color={tintColor} />}}/>
+          <Drawer.Screen 
+              name="Inscription"
+              component={Inscription}
+              options = {{drawerIcon: ({tintColor}) => <Feather name="minus" size={16} color={tintColor} />}}/>
+          <Drawer.Screen 
+              name="Presence"
+              component={PresenceComponent}
               options = {{drawerIcon: ({tintColor}) => <Feather name="minus" size={16} color={tintColor} />}}/>
         </Drawer.Navigator>
       </NavigationContainer>

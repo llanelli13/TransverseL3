@@ -2,8 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 
 
-const ITEM_WIDTH = 200;
-const ITEM_HEIGHT = 300;
+const ITEM_WIDTH = 300;
+const ITEM_HEIGHT = 225;
 
 
 export default function Home() {
@@ -70,6 +70,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   item: {
+    marginTop: 15,
+    marginBottom: 15,
     width: ITEM_WIDTH,
     height: ITEM_HEIGHT,
     backgroundColor: 'lightblue',
