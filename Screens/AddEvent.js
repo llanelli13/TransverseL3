@@ -1,9 +1,8 @@
 import { Alert, StyleSheet, Text, TextInput, View, Button, TouchableOpacity, Image} from 'react-native';
 import { useState } from 'react';
-import 'setimmediate'; // or import 'next-tick';
 import { Calendar } from 'react-native-calendars';
 import Home from './Home';
-import SQLite from 'react-native-sqlite-storage';
+
 
 
 export default function AddEvent () {

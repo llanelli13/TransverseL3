@@ -12,16 +12,14 @@ import Exit from "./Screens/Exit";
 import Inscription from "./Screens/Inscription";
 import Connexion from "./Screens/Connexion";
 import PresenceComponent from "./Screens/Presence";
-import 'setimmediate';
-import 'next-tick';
 import React, { useState, useEffect, useDebugValue } from 'react';
 import { AppRegistry } from 'react-native';
-import SQLite from 'react-native-sqlite-storage';
-SQLite.enablePromise(true);
+import * as SQLite from 'expo-sqlite';
+
 
 const Drawer = createDrawerNavigator();
+const db = SQLite.openDatabase('mydb.db');
 // Si tu met la ligne de dessous sans le commentaire, l'appli ne marche plus
-// const db = SQLite.openDatabase({name: 'mydb.db', location: 'default'});
 
 export default function App () {
 
@@ -64,9 +62,9 @@ export default function App () {
 
 
 
-  // useEffect( () => {
-  //   createTables();
-  // })
+  useEffect( () => {
+    createTables();
+  })
 
 
 

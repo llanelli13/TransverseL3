@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, FlatList } from 'react-native';
-import CheckBox from '@react-native-community/checkbox';
 
 export default function PresenceComponent() {
   const [items, setItems] = useState([

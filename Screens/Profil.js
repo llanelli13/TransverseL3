@@ -2,12 +2,6 @@ import { StyleSheet, View, TextInput, Button, SafeAreaView, TouchableOpacity, Te
 import {FontAwesome5, Ionicons} from "@expo/vector-icons";
 import { useLayoutEffect } from 'react';
 import React, { useState, useEffect, useContext } from 'react';
-import SQLite from 'react-native-sqlite-storage';
-import 'setimmediate';
-import 'next-tick';
-
-
-SQLite.enablePromise(true);
 
 
 const ITEM_WIDTH = 150;
