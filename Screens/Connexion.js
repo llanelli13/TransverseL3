@@ -19,7 +19,7 @@ export default function Connexion () {
                     style={{marginTop: 15}}
                     placeholder="Mot de passe : "/>
             </View>
-  
+
             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Inscription')}>
                 <Text style={styles.buttonText}>Pas de compte ?</Text>
             </TouchableOpacity>

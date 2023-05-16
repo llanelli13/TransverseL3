@@ -1,42 +1,72 @@
-import { StyleSheet, View, TextInput, Button, SafeAreaView, TouchableOpacity, Text } from 'react-native';
-import {FontAwesome5, Ionicons} from "@expo/vector-icons";
-import { useLayoutEffect } from 'react';
-import React, { useState, useEffect, useContext } from 'react';
+import { StyleSheet, Text, TextInput, View,TouchableOpacity} from 'react-native';
+import { useState } from 'react';
+import * as SQLite from 'expo-sqlite';
 
 
 
 export default function Inscription () {  
+
+    const [numLicence, setnumLicence] = useState("");
+    const [Userprenom, setUserprenom] = useState("");
+    const [Usernom, setUsernom] = useState("");
+    const [Usermail, setUsermail] = useState("");
+    const [Userpassword, setUserpassword] = useState("");
+
+
+
+
+    const AddUser = () => {
+        const db = SQLite.openDatabase('ma_base_de_donnees.db');
+
+        db.transaction(tx => {
+            tx.executeSql(
+                'INSERT INTO User (num_Licence, User_prenom, User_nom, User_mail, User_role, User_passwords) VALUES (?, ?, ?, ?, ?, ?)',
+                [`${numLicence}`, `${Userprenom}`, `${Usernom}`, `${Usermail}`, 'user', `${Userpassword}`],
+                (_, resultSet) => {
+                  console.log('Insertion réussie !');
+                },
+                (_, error) => {
+                  console.log('Erreur lors de l\'insertion User:', error);
+                });
+        })
+    }
+
+
     return (
-        <View style = {styles.container}>           
+        <View>           
             
-            <TextInput style={styles.input}
+            <TextInput
+            keyboardType='numeric'
                 placeholder="Numéro de licence"
-                // value={numLicence}
-                // onChangeText={setnumLicence}
+                value={numLicence}
+                onChangeText={setnumLicence}
             />
-            <TextInput style={styles.input}
+            <TextInput
                 placeholder="Prénom"
-                // value= {Userprenom}
-                // onChangeText={setUserprenom}
+                value= {Userprenom}
+                onChangeText={setUserprenom}
             />
-            <TextInput style={styles.input}
+            <TextInput
                 placeholder="Nom"
-                // value={Usernom}
-                // onChangeText={setUsernom}
+                value={Usernom}
+                onChangeText={setUsernom}
             />
-            <TextInput style={styles.input}
+            <TextInput
                 placeholder="Email"
-                // value={Usermail}
-                // onChangeText={setUsermail}
+                value={Usermail}
+                onChangeText={setUsermail}
             />
-            <TextInput style={styles.input}
+            <TextInput
                 placeholder="Mot de passe"
-                // value={Userpassword}
-                // onChangeText={setUserpassword}
+                value={Userpassword}
+                onChangeText={setUserpassword}
             />
  
-
-            {/* <Button title="Créer mon compte"  onPress={}/> */}
+        <TouchableOpacity 
+                onPress={AddUser}>
+            <Text> S'inscrire </Text>
+        </TouchableOpacity>
+        
         </View>
     );
 }

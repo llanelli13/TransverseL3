@@ -1,5 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
+import React, { useState, useEffect, useDebugValue } from 'react';
+import { Alert, TextInput, Button, TouchableOpacity, Image} from 'react-native';
+import * as SQLite from 'expo-sqlite';
 
 
 const ITEM_WIDTH = 300;
@@ -7,35 +10,77 @@ const ITEM_HEIGHT = 225;
 
 
 export default function Home() {
+  const [Data, setData] = useState([]);
 
-  const data = [ 
-    {id: '1', title:'Basket', description:'Tu met un ballon dans un panier', lieu: 'Villejuif'},
-    {id: '2', title:'Foot', description:'Tu met un ballon dans des cages', lieu: 'Villejuif'},
-    {id: '3', title:'Rugby', description:'Tu applatis le ballon', lieu: 'Villejuif'},
-    {id: '4', title:'Handball', description:'Tu met un ballon dans des cages', lieu: 'Villejuif'},
-    {id: '5', title:'PingPong', description:'Tu tapes une balle sur une table', lieu: 'Villejuif'},
-  ];
+  useEffect(() => {
+    fetchDataFromDatabase();
+  }, []);
 
-  const Item = ({ title, description, lieu }) => (
-    <View style={styles.item}>
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}>{title}</Text>   
-          <View style={styles.contenu}>
-            <Text style={styles.description}>Description : {description}</Text>
-            <Text style={styles.lieu}>Lieu : {lieu}</Text>
-          </View>   
-      </View>
-    </View>
-  );
+  const fetchDataFromDatabase = () => {
+    const db = SQLite.openDatabase('ma_base_de_donnees.db');
+  
+    db.transaction(tx => {
+      tx.executeSql(
+        'SELECT * FROM Evenement',
+        [],
+        (_, resultSet) => {
+          const rows = resultSet.rows;
+          const newData = [];
+          for (let i = 0; i < rows.length; i++) {
+            const row = rows.item(i);
+            newData.push(row); // Add each row to the newData array
+          }
+          setData(newData); // Update the Data state with the fetched data
+        },
+        (_, error) => {
+          console.log('Erreur lors de la requête :', error);
+        }
+      );
+    });
+  };
+  
 
-  const Separator = () => <View style={{ width: 10 }} />;
+  const DelEvent = (ID) => {
+    const db = SQLite.openDatabase('ma_base_de_donnees.db');
+
+    db.transaction(tx =>{
+      tx.executeSql(
+        'DELETE FROM Evenement WHERE ID_Evenement = ?',
+        [ID],
+        (_, resultSet) => {
+          console.log('Suppression réussie pour Evenement !');
+          fetchDataFromDatabase();
+        },
+        (_, error) => {
+          console.log('Erreur lors de la suppression de Evenement :', error);
+        }
+      );
+    })
+  }
+
+
+  const Separator = () => <View style={{ width: 12 }} />;
 
   const renderItem = ({ item }) => (
-    <Item
-      title={item.title}
-      description={item.description}
-      lieu={item.lieu}
-    />
+    <View style={styles.item}>
+      <Text>ID : {item.ID_Evenement} </Text>
+      <Text>Type d'événement: {item.Type_Evenement}</Text>
+      <Text>Nom de l'événement: {item.Nom_evenement}</Text>
+      <Text>Lieu: {item.lieu_evenement}</Text>
+      <Text>Date: {item.date_evenement}</Text>
+      <Text>Heure de début: {item.heure_debut}</Text>
+      <Text>Heure de fin: {item.heure_fin}</Text>
+      <Text>Entraîneur: {item.entraineur}</Text>
+
+
+      <TouchableOpacity 
+                onPress={() => DelEvent(item.ID_Evenement)}
+                style = {{marginTop: 50}}>
+            <Text> Delete Event </Text>
+        </TouchableOpacity>
+
+    </View>
+
   );
   
 
@@ -46,14 +91,14 @@ export default function Home() {
       <Text>Welcome home !</Text>
 
       <FlatList
-      data={data}
-      renderItem={renderItem}
-      keyExtractor={(item) => item.id}
-      ItemSeparatorComponent={Separator}
-      horizontal
-      style={{ alignSelf: 'center' }}
-      contentContainerStyle={{ paddingHorizontal: 10 }}
-    />
+        data={Data}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.ID_Evenement.toString()}
+        ItemSeparatorComponent={Separator}
+        horizontal
+        style={{ alignSelf: 'center' }}
+        contentContainerStyle={{ paddingHorizontal: 10 }}
+      />
 
       <Text> Rien de spécial ici</Text>
 
