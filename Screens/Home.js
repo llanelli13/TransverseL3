@@ -3,13 +3,17 @@ import { StyleSheet, Text, View, FlatList } from 'react-native';
 import React, { useState, useEffect, useDebugValue } from 'react';
 import { Alert, TextInput, Button, TouchableOpacity, Image} from 'react-native';
 import * as SQLite from 'expo-sqlite';
+import * as Permissions from 'expo-permissions';
+import * as Calendar from 'expo-calendar';
 
 
 const ITEM_WIDTH = 300;
 const ITEM_HEIGHT = 225;
 
 
-export default function Home() {
+export default function Home({ route }) {
+
+  const { user } = route.params;
   const [Data, setData] = useState([]);
 
   useEffect(() => {
@@ -55,8 +59,63 @@ export default function Home() {
           console.log('Erreur lors de la suppression de Evenement :', error);
         }
       );
-    })
+    });
+
   }
+
+  const Participe = (ID_Evenement, num_Licence) => {
+    const db = SQLite.openDatabase('ma_base_de_donnees.db');
+
+    db.transaction(tx => {
+      tx.executeSql(
+        'INSERT INTO Participe (ID_Participe, ID_Evenement, num_Licence) VALUES (?, ?)',
+        [`${item.ID_Evenement}`, '1'],
+        (_, resultSet) => {
+          console.log('Participation réussi !');
+        },
+        (_, error) => {
+          console.log('Erreur lors de la participation à l evenement:', error);
+        });
+    });
+
+  }
+
+  async function askCalendarPermission() {
+    const { status } = await Permissions.askAsync(Permissions.CALENDAR);
+    if (status === 'granted') {
+      // L'utilisateur a donné la permission
+      return true;
+    } else {
+      // L'utilisateur n'a pas donné la permission
+      return false;
+    }
+  }
+  
+  async function handleParticipateClick(eventId, num_Licence) {
+    // ...
+    try {
+      const db = SQLite.openDatabase('ma_base_de_donnees.db');
+      db.transaction(tx => {
+        tx.executeSql(
+          'INSERT INTO Participe (ID_Evenement, num_Licence) VALUES (?, ?)',
+          [eventId, num_Licence],
+          (_, resultSet) => {
+            console.log('Participation réussie !');
+            // Ici, vous pouvez effectuer toute autre logique nécessaire après l'insertion
+          },
+          (_, error) => {
+            console.log('Erreur lors de la participation à l\'événement :', error);
+          }
+        );
+      });
+    } catch (error) {
+      console.log('Erreur lors de l\'ajout de l\'événement :', error);
+    };
+
+
+  }
+  
+  
 
 
   const Separator = () => <View style={{ width: 12 }} />;
@@ -74,8 +133,14 @@ export default function Home() {
 
 
       <TouchableOpacity 
+                onPress={() => handleParticipateClick(item.ID_Evenement, user.num_Licence)} style={{ marginTop: 15 }}>
+            <Text>Je participe</Text>
+      </TouchableOpacity>
+
+
+      <TouchableOpacity 
                 onPress={() => DelEvent(item.ID_Evenement)}
-                style = {{marginTop: 50}}>
+                style = {{marginTop: 10}}>
             <Text> Delete Event </Text>
         </TouchableOpacity>
 
@@ -88,7 +153,7 @@ export default function Home() {
 
   return (
     <View style={styles.container}>
-      <Text>Welcome home !</Text>
+      <Text>Welcome home, {user.User_prenom}! </Text>
 
       <FlatList
         data={Data}

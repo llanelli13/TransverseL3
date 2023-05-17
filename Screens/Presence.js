@@ -3,78 +3,86 @@ import { StyleSheet, View, Text, FlatList } from 'react-native';
 import * as SQLite from 'expo-sqlite';
 import { CheckBox } from 'react-native-elements';
 
-export default function PresenceComponent() {
-  // const [items, setItems] = useState([
-  //   { id: 1, name: "REY", firstName: "Pierre", isSelected: false },
-  //   { id: 2, name: "BELMADANI", firstName: "Remi", isSelected: false },
-  //   { id: 3, name: "NEUBERTH", firstName: "Ludwig", isSelected: false },
-  //   { id: 4, name: "VIGOT", firstName: "Marin", isSelected: false },
-  //   { id: 5, name: "ITTE", firstName: "Steve", isSelected: false },
-  // ]);
+export default function PresenceComponent({ route }) { // route est la prop utilisée pour passer les paramètres à ce composant
 
-  // const toggleCheckbox = (id) => {
-  //   const newItems = items.map((item) =>
-  //     item.id === id ? { ...item, isSelected: !item.isSelected } : item
-  //   );
-  //   setItems(newItems);
-  // };
+  const { item } = route.params;
+
+
 
   const [Data, setData] = useState([]);
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState([]);
+
 
   useEffect(() => {
-    fetchDataFromDatabase();
+    fetchDataFromDatabase(item);
   }, []);
 
 
-  const handleCheck = (ID) => {
-    setChecked(!checked);
+  const handleCheck = (numLicence) => {
+    setChecked((prevState) => {
+      const updatedChecked = [...prevState];
+      const index = updatedChecked.indexOf(numLicence);
+      if (index > -1) {
+        updatedChecked.splice(index, 1); // Décocher l'élément
+      } else {
+        updatedChecked.push(numLicence); // Cocher l'élément
+      }
+      return updatedChecked;
+    });
   };
 
 
-  const fetchDataFromDatabase = () => {
+  const fetchDataFromDatabase = (item) => {
     const db = SQLite.openDatabase('ma_base_de_donnees.db');
-  
+
     db.transaction(tx => {
+      console.log(item)
       tx.executeSql(
-        'SELECT * FROM User',
-        [],
+        'SELECT Participe.*, User.* FROM Participe INNER JOIN Evenement ON Participe.ID_Evenement = Evenement.ID_Evenement INNER JOIN User on Participe.num_Licence = User.num_Licence  WHERE Participe.ID_Evenement = ?',
+        [item.ID_Evenement],
         (_, resultSet) => {
+          console.log(resultSet);
           const rows = resultSet.rows;
           const newData = [];
           for (let i = 0; i < rows.length; i++) {
             const row = rows.item(i);
-            newData.push(row); // Add each row to the newData array
+            newData.push(row); // Ajouter chaque ligne à l'array newData
+            
           }
-          setData(newData); // Update the Data state with the fetched data
+          setData(newData); // Mettre à jour le state Data avec les données récupérées
         },
         (_, error) => {
           console.log('Erreur lors de la requête :', error);
         }
       );
     });
+
   };
   
   const Separator = () => <View style={{ width: 12 }} />;
 
   const renderItem = ({ item }) => (
-    <View style={styles.item} key={item.num_Licence}>
+    <View style={styles.item} key={item.num_Licence.toString()}>
       <Text>{item.num_Licence}</Text>
       <Text>{item.User_nom}</Text>
       <Text>{item.User_prenom}</Text>
       <CheckBox
-        checked={checked}
+        checked={checked.includes(item.num_Licence)}
         onPress={() => handleCheck(item.num_Licence)}
       />
     </View>
   );
+  
+  
 
   return (
     <View>
+
+      <Text> Evenement choisi : {item.Nom_evenement}</Text>
       <FlatList
         data={Data}
         renderItem={renderItem}
-        keyExtractor={(item) => item.Num_Licence}
+        keyExtractor={(item) => item.num_Licence}
         ItemSeparatorComponent={Separator}
       />
     </View>

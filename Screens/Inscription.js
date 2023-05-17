@@ -1,10 +1,13 @@
 import { StyleSheet, Text, TextInput, View,TouchableOpacity} from 'react-native';
 import { useState } from 'react';
 import * as SQLite from 'expo-sqlite';
+import { useNavigation } from '@react-navigation/native';
 
 
 
 export default function Inscription () {  
+
+    const navigation = useNavigation();
 
     const [numLicence, setnumLicence] = useState("");
     const [Userprenom, setUserprenom] = useState("");
@@ -29,6 +32,10 @@ export default function Inscription () {
                   console.log('Erreur lors de l\'insertion User:', error);
                 });
         })
+
+        navigation.navigate('Connexion');
+
+
     }
 
 

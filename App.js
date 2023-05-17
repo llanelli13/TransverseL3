@@ -11,9 +11,12 @@ import Exit from "./Screens/Exit";
 import Inscription from "./Screens/Inscription";
 import Connexion from "./Screens/Connexion";
 import PresenceComponent from "./Screens/Presence";
+import ChoixEvent from "./Screens/Choix_Event";
 import React, { useState, useEffect, useDebugValue } from 'react';
 import { AppRegistry, TextInputBase } from 'react-native';
 import * as SQLite from 'expo-sqlite';
+import * as SecureStore from 'expo-secure-store';
+import { useNavigation } from '@react-navigation/native';
 
 
 const Drawer = createDrawerNavigator();
@@ -79,7 +82,7 @@ export default function App () {
 
       tx.executeSql(
         'INSERT INTO Evenement (Type_Evenement, Nom_evenement, lieu_evenement, date_evenement, heure_debut, heure_fin, entraineur) VALUES (?, ?, ?, ?, ?, ?, ?)',
-        ['Basket', 'Basket_Entrainement', 'Montrouge', '25-05-2023', '18', '20', 'Pierre'],
+        ['Basket', 'Basket_Entrainement', 'Montrouge', '2023-05-14', '18', '20', 'Pierre'],
         (_, resultSet) => {
           console.log('Insertion réussie !');
         },
@@ -131,20 +134,20 @@ export default function App () {
         }
       );
 
-      // tx.executeSql(
-      //   'SELECT * FROM Participe',
-      //   [],
-      //   (_, resultSet) => {
-      //     const rows = resultSet.rows;
-      //     for (let i = 0; i < rows.length; i++) {
-      //       const row = rows.item(i);
-      //       console.log('Résultat de la requête :', row);
-      //     }
-      //   },
-      //   (_, error) => {
-      //     console.log('Erreur lors de la requête :', error);
-      //   }
-      // );
+      tx.executeSql(
+        'SELECT * FROM Participe',
+        [],
+        (_, resultSet) => {
+          const rows = resultSet.rows;
+          for (let i = 0; i < rows.length; i++) {
+            const row = rows.item(i);
+            console.log('Résultat de la requête :', row);
+          }
+        },
+        (_, error) => {
+          console.log('Erreur lors de la requête :', error);
+        }
+      );
     });
   };
 
@@ -187,10 +190,13 @@ export default function App () {
     
   }
   return(
+
+
       <NavigationContainer>
-        <Drawer.Navigator screenOptions={{headerShown : true, 
-                                          //headerStyle: {backgroundColor: 'lightgray'},
-}}>
+        <Drawer.Navigator 
+              initialRouteName="Connexion"
+              screenOptions={{headerShown : true, }}>          
+
           <Drawer.Screen 
               name="Home" 
               component={Home}
@@ -222,14 +228,24 @@ export default function App () {
           <Drawer.Screen 
               name="Connexion" 
               component={Connexion}
-              options = {{drawerIcon: ({tintColor}) => <Feather name="minus" size={16} color={tintColor} />}} />
+              options = {{drawerIcon: ({tintColor}) => (<Feather name="minus" size={16} color={tintColor} />),
+              headerShown: false, // Enleve l'affichage du drawer
+              swipeEnabled: false,  // Empeche de swipe pour afficher le drawer
+            }}/>
           <Drawer.Screen 
               name="Inscription"
               component={Inscription}
-              options = {{drawerIcon: ({tintColor}) => <Feather name="minus" size={16} color={tintColor} />}}/>
+              options = {{drawerIcon: ({tintColor}) => (<Feather name="minus" size={16} color={tintColor} />),
+              headerShown: false, // Enleve l'affichage du drawer
+              swipeEnabled: false,  // Empeche de swipe pour afficher le drawer
+            }}/>
           <Drawer.Screen 
               name="Presence"
               component={PresenceComponent}
+              options = {{drawerIcon: ({tintColor}) => <Feather name="minus" size={16} color={tintColor} />}}/>
+          <Drawer.Screen 
+              name="ChoixEvent"
+              component={ChoixEvent}
               options = {{drawerIcon: ({tintColor}) => <Feather name="minus" size={16} color={tintColor} />}}/>
         </Drawer.Navigator>
       </NavigationContainer>

@@ -15,15 +15,67 @@ export default function AddEvent () {
     const [Heure_Debut, SetHeure_Debut] = useState("");
     const [Heure_Fin, SetHeure_Fin] = useState("");
 
+    const fetchData = () => {
+
+        const db = SQLite.openDatabase('ma_base_de_donnees.db');
+        db.transaction(tx => {
+          tx.executeSql(
+            'SELECT * FROM User',
+            [],
+            (_, resultSet) => {
+              const rows = resultSet.rows;
+              for (let i = 0; i < rows.length; i++) {
+                const row = rows.item(i);
+                console.log('Résultat de la requête :', row);
+              }
+            },
+            (_, error) => {
+              console.log('Erreur lors de la requête :', error);
+            }
+          );
+    
+          tx.executeSql(
+            'SELECT * FROM Evenement',
+            [],
+            (_, resultSet) => {
+              const rows = resultSet.rows;
+              for (let i = 0; i < rows.length; i++) {
+                const row = rows.item(i);
+                console.log('Résultat de la requête :', row);
+              }
+            },
+            (_, error) => {
+              console.log('Erreur lors de la requête :', error);
+            }
+          );
+    
+          tx.executeSql(
+            'SELECT * FROM Participe',
+            [],
+            (_, resultSet) => {
+              const rows = resultSet.rows;
+              for (let i = 0; i < rows.length; i++) {
+                const row = rows.item(i);
+                console.log('Résultat de la requête :', row);
+              }
+            },
+            (_, error) => {
+              console.log('Erreur lors de la requête :', error);
+            }
+          );
+        });
+      };
+
     const addEvent = () => {
         const db = SQLite.openDatabase('ma_base_de_donnees.db');
 
         db.transaction(tx => {
             tx.executeSql(
                 'INSERT INTO Evenement (Type_Evenement, Nom_evenement, lieu_evenement, date_evenement, heure_debut, heure_fin, entraineur) VALUES (?, ?, ?, ?, ?, ?, ?)',
-                [`${Nom}`, `${Nom}`, `${Lieu}`, `${Jour}`+'-'+`${Mois}`+'-'+`${Annee}`, `${Heure_Debut}`, `${Heure_Fin}`, `${Trainer}`],
+                [`${Nom}`, `${Nom}`, `${Lieu}`, `${Annee}`+'-'+`${Mois}`+'-'+`${Jour}`, `${Heure_Debut}`, `${Heure_Fin}`, `${Trainer}`],
                 (_, resultSet) => {
                   console.log('Add Event réussi');
+                  fetchData();
                 },
                 (_, error) => {
                   console.log('Erreur lors de add Event Evenement:', error);
