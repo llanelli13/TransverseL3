@@ -1,14 +1,14 @@
-import { StyleSheet, Text, View, Button } from 'react-native';
-import { TouchableOpacity, Image, Div } from 'react-native';
+import React from "react";
+import { View, Text } from "react-native";
+import AdminCheck from "../Components/AdminCheck";
 
-export default function ContactUs ( { navigation }){
+const ContactUs = () => {
+  return (
+    <View>
+      <AdminCheck />
+      <Text>Olala contactez nous ....</Text>
+    </View>
+  );
+};
 
-    return(
-        <View>
-            <Text>
-                Olala contactez nous ....
-            </Text>
-        </View>
-
-    );
-}
+export default ContactUs;
