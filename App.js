@@ -313,7 +313,6 @@ export default function App() {
             drawerIcon: ({ tintColor }) => (
               <Feather name="minus" size={16} color={tintColor} />
             ),
-            drawerLabel: () => null,
           }}
         />
       </Drawer.Navigator>
