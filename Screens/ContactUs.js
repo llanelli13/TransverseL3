@@ -5,7 +5,6 @@ import AdminCheck from "../Components/AdminCheck";
 const ContactUs = () => {
   return (
     <View>
-      <AdminCheck />
       <Text>Olala contactez nous ....</Text>
     </View>
   );
