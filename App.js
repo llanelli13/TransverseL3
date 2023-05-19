@@ -13,6 +13,10 @@ export default function App() {
     // insertData();
     fetchData();
     // DelData();
+     //createTables();
+     //insertData();
+     //fetchData();
+     //DelData();
   }, []);
 
   const createTables = () => {
