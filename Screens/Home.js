@@ -15,7 +15,7 @@ import * as Calendar from "expo-calendar";
 const ITEM_WIDTH = 300;
 const ITEM_HEIGHT = 225;
 
-export default function Home({ route }) {
+export default function Home({ route}) {
   const { user } = route.params;
   const [Data, setData] = useState([]);
 
@@ -117,6 +117,48 @@ export default function Home({ route }) {
     }
   }
 
+
+  const getImageSource = (typeEvenement) => {
+    let imagePath = '';
+    switch (typeEvenement) {
+      case 'athletisme':
+        imagePath = require(`../Images/sport/athle.png`);
+        break;
+      case 'Basket':
+        imagePath = require(`../Images/sport/Basket.png`);
+        break;
+      case 'Badminton':
+        imagePath = require(`../Images/sport/Badminton.png`);
+        break;
+      case 'Football':
+        imagePath = require(`../Images/sport/Foot.png`);
+        break;
+      case 'Hike':
+        imagePath = require(`../Images/sport/Hike_Efrei.png`);
+        break;
+      case 'Tennis':
+        imagePath = require(`../Images/sport/Tennis.png`);
+        break;
+      case 'Natation':
+        imagePath = require(`../Images/sport/Natation.png`);
+        break;
+      case 'Rugby':
+        imagePath = require(`../Images/sport/Rugby.png`);
+        break;
+      case 'Volleyball':
+        imagePath = require(`../Images/sport/Volley.png`);
+        break;
+      case 'Ping Pong':
+        imagePath = require(`../Images/sport/Logo_tennis_de_table.png`);
+        break;
+  
+      // Ajoute d'autres cas pour les autres types d'événements avec leurs chemins d'image correspondants
+      default:
+        <Text> Pas d'image </Text>
+    }
+    return imagePath;
+  };
+  
   const Separator = () => <View style={{ width: 12 }} />;
 
   const renderItem = ({ item }) => (
@@ -125,9 +167,16 @@ export default function Home({ route }) {
         <Text>{item.date_evenement}</Text>
       </View>
 
-      <View style = {{width: '40%', height: '30%'}}>
-        <Text style = {{fontSize: 16}}>{item.Nom_evenement}</Text>
-      </View>
+    <View style = {{flexDirection: 'row'}}>
+        <View style = {{width: '50%', height: '100%', justifyContent: 'center', alignItems: 'center'}}>
+          <Text style = {{fontSize: 16}}>{item.Type_Evenement}</Text>
+        </View>
+        <View style = {{width: '50%', height: '100%', justifyContent: 'center', alignItems:'center'}}>
+          <Image source={getImageSource(item.Type_Evenement)} 
+               style={{ width: 80, height: 80 }} />
+        </View>
+    </View>
+
 
       <View>
         <Text>Entraîneur: {item.entraineur}</Text>
@@ -197,8 +246,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#232c53",
-    alignItems: "center",
-    justifyContent: "center",
+    // alignItems: "center",
+    // justifyContent: "center",
   },
   item: {
     marginTop: 15,

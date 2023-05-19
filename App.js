@@ -11,7 +11,7 @@ export default function App() {
   useEffect(() => {
     // createTables();
     // insertData();
-    // fetchData();
+    fetchData();
     // DelData();
   }, []);
 
@@ -54,9 +54,24 @@ export default function App() {
           console.log("Error creating participe table ", error);
         }
       );
-    });
-  };
 
+      const db = SQLite.openDatabase("ma_base_de_donnees.db");
+
+      // Création de la table LocalData
+        tx.executeSql(
+          "CREATE TABLE IF NOT EXISTS LocalData (id INTEGER PRIMARY KEY AUTOINCREMENT, key TEXT UNIQUE, value TEXT)",
+          [],
+          () => {
+            console.log("Table LocalData créée avec succès");
+          },
+          (_, error) => {
+            console.error("Erreur lors de la création de la table LocalData", error);
+          }
+        );
+      });
+
+  };
+  
   const insertData = () => {
     db.transaction((tx) => {
       tx.executeSql(
@@ -64,13 +79,12 @@ export default function App() {
         ["1", "Pierre", "REY", "pierrerey@gmail.com", "admin", "jsp"],
         (_, resultSet) => {
           console.log("Insertion réussie !");
-          fetchData("User"); // Fetch and display User table data
         },
         (_, error) => {
           console.log("Erreur lors de l'insertion User:", error);
         }
       );
-  
+
       tx.executeSql(
         "INSERT INTO Evenement (Type_Evenement, Nom_evenement, lieu_evenement, date_evenement, heure_debut, heure_fin, entraineur) VALUES (?, ?, ?, ?, ?, ?, ?)",
         [
@@ -84,137 +98,47 @@ export default function App() {
         ],
         (_, resultSet) => {
           console.log("Insertion réussie !");
-          fetchData("Evenement"); // Fetch and display Evenement table data
         },
         (_, error) => {
           console.log("Erreur lors de l'insertion Evenement:", error);
         }
       );
-  
-      // tx.executeSql(
-      //   'INSERT INTO Participe (ID_Participe, ID_Evenement, num_Licence) VALUES (?, ?, ?)',
-      //   [''],
-      //   (_, resultSet) => {
-      //     console.log('Insertion réussie !');
-      //   },
-      //   (_, error) => {
-      //     console.log('Erreur lors de l\'insertion Evenement:', error);
-      //   });
     });
   };
-  
-  const fetchData = (tableName) => {
+
+  const fetchData = () => {
     db.transaction((tx) => {
       tx.executeSql(
-        `SELECT * FROM ${tableName}`,
+        "SELECT * FROM User",
         [],
         (_, resultSet) => {
           const rows = resultSet.rows;
-          let rowData = [];
           for (let i = 0; i < rows.length; i++) {
             const row = rows.item(i);
-            rowData.push(row);
+            console.log("Résultat de la requête :", row);
           }
-          console.log(`Data in ${tableName} table:\n${JSON.stringify(rowData)}`);
         },
         (_, error) => {
-          console.log(`Erreur lors de la requête pour ${tableName} table:`, error);
+          console.log("Erreur lors de la requête :", error);
+        }
+      );
+
+      tx.executeSql(
+        "SELECT * FROM Evenement",
+        [],
+        (_, resultSet) => {
+          const rows = resultSet.rows;
+          for (let i = 0; i < rows.length; i++) {
+            const row = rows.item(i);
+            console.log("Résultat de la requête :", row);
+          }
+        },
+        (_, error) => {
+          console.log("Erreur lors de la requête :", error);
         }
       );
     });
   };
-  // const insertData = () => {
-  //   db.transaction((tx) => {
-  //     tx.executeSql(
-  //       "INSERT INTO User (num_Licence, User_prenom, User_nom, User_mail, User_role, User_passwords) VALUES (?, ?, ?, ?, ?, ?)",
-  //       ["1", "Pierre", "REY", "pierrerey@gmail.com", "admin", "jsp"],
-  //       (_, resultSet) => {
-  //         console.log("Insertion réussie !");
-  //       },
-  //       (_, error) => {
-  //         console.log("Erreur lors de l'insertion User:", error);
-  //       }
-  //     );
-
-  //     tx.executeSql(
-  //       "INSERT INTO Evenement (Type_Evenement, Nom_evenement, lieu_evenement, date_evenement, heure_debut, heure_fin, entraineur) VALUES (?, ?, ?, ?, ?, ?, ?)",
-  //       [
-  //         "Basket",
-  //         "Basket_Entrainement",
-  //         "Montrouge",
-  //         "2023-05-14",
-  //         "18",
-  //         "20",
-  //         "Pierre",
-  //       ],
-  //       (_, resultSet) => {
-  //         console.log("Insertion réussie !");
-  //       },
-  //       (_, error) => {
-  //         console.log("Erreur lors de l'insertion Evenement:", error);
-  //       }
-  //     );
-
-  //     // tx.executeSql(
-  //     //   'INSERT INTO Participe (ID_Participe, ID_Evenement, num_Licence) VALUES (?, ?, ?)',
-  //     //   [''],
-  //     //   (_, resultSet) => {
-  //     //     console.log('Insertion réussie !');
-  //     //   },
-  //     //   (_, error) => {
-  //     //     console.log('Erreur lors de l\'insertion Evenement:', error);
-  //     //   });
-  //   });
-  // };
-
-  // const fetchData = () => {
-  //   db.transaction((tx) => {
-  //     tx.executeSql(
-  //       "SELECT * FROM User",
-  //       [],
-  //       (_, resultSet) => {
-  //         const rows = resultSet.rows;
-  //         for (let i = 0; i < rows.length; i++) {
-  //           const row = rows.item(i);
-  //           console.log("Résultat de la requête :", row);
-  //         }
-  //       },
-  //       (_, error) => {
-  //         console.log("Erreur lors de la requête :", error);
-  //       }
-  //     );
-
-  //     tx.executeSql(
-  //       "SELECT * FROM Evenement",
-  //       [],
-  //       (_, resultSet) => {
-  //         const rows = resultSet.rows;
-  //         for (let i = 0; i < rows.length; i++) {
-  //           const row = rows.item(i);
-  //           console.log("Résultat de la requête :", row);
-  //         }
-  //       },
-  //       (_, error) => {
-  //         console.log("Erreur lors de la requête :", error);
-  //       }
-  //     );
-
-  //     tx.executeSql(
-  //       "SELECT * FROM Participe",
-  //       [],
-  //       (_, resultSet) => {
-  //         const rows = resultSet.rows;
-  //         for (let i = 0; i < rows.length; i++) {
-  //           const row = rows.item(i);
-  //           console.log("Résultat de la requête :", row);
-  //         }
-  //       },
-  //       (_, error) => {
-  //         console.log("Erreur lors de la requête :", error);
-  //       }
-  //     );
-  //   });
-  // };
 
   const DelData = () => {
     db.transaction((tx) => {

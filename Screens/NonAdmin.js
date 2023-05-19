@@ -1,7 +1,22 @@
 import React from "react";
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  Button,
+  SafeAreaView,
+  TouchableOpacity,
+  Text,
+  Alert
+} from "react-native";
+
 
 function NonAdmin() {
-  return <div>Espace reservé aux admins !</div>;
+  return(
+    <View>
+      <Text> Espace reservé aux admins ! </Text>
+    </View>
+  );
 }
 
 export default NonAdmin;

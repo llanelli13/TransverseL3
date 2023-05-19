@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import { useState } from "react";
 import * as SQLite from "expo-sqlite";
-import AdminCheck from "../Components/AdminCheck";
+// import AdminCheck from "../Components/AdminCheck";
 
 export default function AddEvent() {
   const [Nom, Setnom] = useState("");
@@ -97,7 +97,7 @@ export default function AddEvent() {
 
   return (
     <View>
-      <AdminCheck />
+      {/* <AdminCheck /> */}
       <TextInput placeholder="Nom :" value={Nom} onChangeText={Setnom} />
 
       <TextInput placeholder="Lieu :" value={Lieu} onChangeText={SetLieu} />
