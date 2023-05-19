@@ -1,16 +1,17 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import React, { useState, useEffect, useDebugValue } from "react";
-import { AppRegistry, TextInputBase } from "react-native";
+import { AppRegistry, TextInputBase, alert } from "react-native";
 import * as SQLite from "expo-sqlite";
-import NavigationDrawer from "./Components/NavigationDrawer";
+import NavigationDrawer from "./Components/NavigationDrawer"
+
 
 const db = SQLite.openDatabase("ma_base_de_donnees.db");
 
 export default function App() {
   useEffect(() => {
-    createTables();
-    insertData();
-    fetchData();
+    // createTables();
+    // insertData();
+    // fetchData();
     // DelData();
   }, []);
 
@@ -22,9 +23,11 @@ export default function App() {
         [],
         () => {
           console.log("User table created successfully");
+
         },
         (_, error) => {
           console.log("Error creating user table ", error);
+
         }
       );
 
@@ -33,9 +36,11 @@ export default function App() {
         [],
         () => {
           console.log("Evenement table created successfully");
+
         },
         (_, error) => {
           console.log("Error creating evenement table ", error);
+
         }
       );
 
@@ -59,12 +64,13 @@ export default function App() {
         ["1", "Pierre", "REY", "pierrerey@gmail.com", "admin", "jsp"],
         (_, resultSet) => {
           console.log("Insertion réussie !");
+          fetchData("User"); // Fetch and display User table data
         },
         (_, error) => {
           console.log("Erreur lors de l'insertion User:", error);
         }
       );
-
+  
       tx.executeSql(
         "INSERT INTO Evenement (Type_Evenement, Nom_evenement, lieu_evenement, date_evenement, heure_debut, heure_fin, entraineur) VALUES (?, ?, ?, ?, ?, ?, ?)",
         [
@@ -78,12 +84,13 @@ export default function App() {
         ],
         (_, resultSet) => {
           console.log("Insertion réussie !");
+          fetchData("Evenement"); // Fetch and display Evenement table data
         },
         (_, error) => {
           console.log("Erreur lors de l'insertion Evenement:", error);
         }
       );
-
+  
       // tx.executeSql(
       //   'INSERT INTO Participe (ID_Participe, ID_Evenement, num_Licence) VALUES (?, ?, ?)',
       //   [''],
@@ -95,55 +102,119 @@ export default function App() {
       //   });
     });
   };
-
-  const fetchData = () => {
+  
+  const fetchData = (tableName) => {
     db.transaction((tx) => {
       tx.executeSql(
-        "SELECT * FROM User",
+        `SELECT * FROM ${tableName}`,
         [],
         (_, resultSet) => {
           const rows = resultSet.rows;
+          let rowData = [];
           for (let i = 0; i < rows.length; i++) {
             const row = rows.item(i);
-            console.log("Résultat de la requête :", row);
+            rowData.push(row);
           }
+          console.log(`Data in ${tableName} table:\n${JSON.stringify(rowData)}`);
         },
         (_, error) => {
-          console.log("Erreur lors de la requête :", error);
-        }
-      );
-
-      tx.executeSql(
-        "SELECT * FROM Evenement",
-        [],
-        (_, resultSet) => {
-          const rows = resultSet.rows;
-          for (let i = 0; i < rows.length; i++) {
-            const row = rows.item(i);
-            console.log("Résultat de la requête :", row);
-          }
-        },
-        (_, error) => {
-          console.log("Erreur lors de la requête :", error);
-        }
-      );
-
-      tx.executeSql(
-        "SELECT * FROM Participe",
-        [],
-        (_, resultSet) => {
-          const rows = resultSet.rows;
-          for (let i = 0; i < rows.length; i++) {
-            const row = rows.item(i);
-            console.log("Résultat de la requête :", row);
-          }
-        },
-        (_, error) => {
-          console.log("Erreur lors de la requête :", error);
+          console.log(`Erreur lors de la requête pour ${tableName} table:`, error);
         }
       );
     });
   };
+  // const insertData = () => {
+  //   db.transaction((tx) => {
+  //     tx.executeSql(
+  //       "INSERT INTO User (num_Licence, User_prenom, User_nom, User_mail, User_role, User_passwords) VALUES (?, ?, ?, ?, ?, ?)",
+  //       ["1", "Pierre", "REY", "pierrerey@gmail.com", "admin", "jsp"],
+  //       (_, resultSet) => {
+  //         console.log("Insertion réussie !");
+  //       },
+  //       (_, error) => {
+  //         console.log("Erreur lors de l'insertion User:", error);
+  //       }
+  //     );
+
+  //     tx.executeSql(
+  //       "INSERT INTO Evenement (Type_Evenement, Nom_evenement, lieu_evenement, date_evenement, heure_debut, heure_fin, entraineur) VALUES (?, ?, ?, ?, ?, ?, ?)",
+  //       [
+  //         "Basket",
+  //         "Basket_Entrainement",
+  //         "Montrouge",
+  //         "2023-05-14",
+  //         "18",
+  //         "20",
+  //         "Pierre",
+  //       ],
+  //       (_, resultSet) => {
+  //         console.log("Insertion réussie !");
+  //       },
+  //       (_, error) => {
+  //         console.log("Erreur lors de l'insertion Evenement:", error);
+  //       }
+  //     );
+
+  //     // tx.executeSql(
+  //     //   'INSERT INTO Participe (ID_Participe, ID_Evenement, num_Licence) VALUES (?, ?, ?)',
+  //     //   [''],
+  //     //   (_, resultSet) => {
+  //     //     console.log('Insertion réussie !');
+  //     //   },
+  //     //   (_, error) => {
+  //     //     console.log('Erreur lors de l\'insertion Evenement:', error);
+  //     //   });
+  //   });
+  // };
+
+  // const fetchData = () => {
+  //   db.transaction((tx) => {
+  //     tx.executeSql(
+  //       "SELECT * FROM User",
+  //       [],
+  //       (_, resultSet) => {
+  //         const rows = resultSet.rows;
+  //         for (let i = 0; i < rows.length; i++) {
+  //           const row = rows.item(i);
+  //           console.log("Résultat de la requête :", row);
+  //         }
+  //       },
+  //       (_, error) => {
+  //         console.log("Erreur lors de la requête :", error);
+  //       }
+  //     );
+
+  //     tx.executeSql(
+  //       "SELECT * FROM Evenement",
+  //       [],
+  //       (_, resultSet) => {
+  //         const rows = resultSet.rows;
+  //         for (let i = 0; i < rows.length; i++) {
+  //           const row = rows.item(i);
+  //           console.log("Résultat de la requête :", row);
+  //         }
+  //       },
+  //       (_, error) => {
+  //         console.log("Erreur lors de la requête :", error);
+  //       }
+  //     );
+
+  //     tx.executeSql(
+  //       "SELECT * FROM Participe",
+  //       [],
+  //       (_, resultSet) => {
+  //         const rows = resultSet.rows;
+  //         for (let i = 0; i < rows.length; i++) {
+  //           const row = rows.item(i);
+  //           console.log("Résultat de la requête :", row);
+  //         }
+  //       },
+  //       (_, error) => {
+  //         console.log("Erreur lors de la requête :", error);
+  //       }
+  //     );
+  //   });
+  // };
 
   const DelData = () => {
     db.transaction((tx) => {
@@ -181,7 +252,8 @@ export default function App() {
       );
     });
   };
-  return <NavigationDrawer />;
+  return (<NavigationDrawer />)
+
 }
 
 AppRegistry.registerComponent("App", () => App);

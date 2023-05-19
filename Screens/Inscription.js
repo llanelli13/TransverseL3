@@ -40,67 +40,78 @@ export default function Inscription () {
 
 
     return (
-        <View>           
-            
-            <TextInput
-            keyboardType='numeric'
-                placeholder="Numéro de licence"
-                value={numLicence}
-                onChangeText={setnumLicence}
-            />
-            <TextInput
-                placeholder="Prénom"
-                value= {Userprenom}
-                onChangeText={setUserprenom}
-            />
-            <TextInput
-                placeholder="Nom"
-                value={Usernom}
-                onChangeText={setUsernom}
-            />
-            <TextInput
-                placeholder="Email"
-                value={Usermail}
-                onChangeText={setUsermail}
-            />
-            <TextInput
-                placeholder="Mot de passe"
-                value={Userpassword}
-                onChangeText={setUserpassword}
-            />
- 
-        <TouchableOpacity 
-                onPress={AddUser}>
-            <Text> S'inscrire </Text>
-        </TouchableOpacity>
-        
+        <View style= {styles.background}>  
+            <View style = {styles.container}>
+                <TextInput
+                    style = {styles.textezone}
+                    keyboardType='numeric'
+                    placeholder="Numéro de licence"
+                    value={numLicence}
+                    onChangeText={setnumLicence}
+                />
+                <TextInput
+                    style = {styles.textezone}
+                    placeholder="Prénom"
+                    value= {Userprenom}
+                    onChangeText={setUserprenom}
+                />
+                <TextInput
+                    style = {styles.textezone}
+                    placeholder="Nom"
+                    value={Usernom}
+                    onChangeText={setUsernom}
+                />
+                <TextInput
+                    style = {styles.textezone}
+                    placeholder="Email"
+                    value={Usermail}
+                    onChangeText={setUsermail}
+                />
+                <TextInput
+                    style = {styles.textezone}
+                    placeholder="Mot de passe"
+                    value={Userpassword}
+                    onChangeText={setUserpassword}
+                />
+                <TouchableOpacity 
+                    style = {styles.button}
+                    onPress={AddUser}>
+                    <Text> S'inscrire </Text>
+                </TouchableOpacity>
+            </View>              
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    input:{
-        padding: 5,
-        margin:5,
-        borderWidth: 0.2,
-
-    },
-    container: {
-        flexDirection: 'column',
+    background: {
         flex: 1,
-        backgroundColor: "#FFF",
-    },
-    text: {
-        color:"#161924",
-        fontSize: 20,
-        fontWeight: "500",
-    },
-    texte:{
-        fontWeight: 'bold',
-        fontSize: 24,
-    },
-    test: {
-        display: 'flex',
-        flexDirection: 'row',
-    }
+        backgroundColor:  '#232c53',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      container: {
+        width: '75%'
+      },
+      textezone: {
+        backgroundColor: 'white',
+        borderWidth: 1,
+        borderRadius: 5,
+        width: '100%',
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        borderRadius: 5,
+        marginVertical: 10,
+      },
+      button: {
+        backgroundColor: "#556297",
+        alignItems: 'center',
+        borderWidth: 1,
+        width: '100%',
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        borderRadius: 5,
+        marginVertical: 10,
+      },
+
 })

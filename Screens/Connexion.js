@@ -6,15 +6,17 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Text,
+  alert
 } from "react-native";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { useLayoutEffect } from "react";
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigation } from "@react-navigation/native";
 import * as SQLite from "expo-sqlite";
-import * as SecureStore from "expo-secure-store";
 
 export default function Connexion() {
+
+
   const navigation = useNavigation();
 
   const [numLicence, SetnumLicence] = useState("");
@@ -37,64 +39,98 @@ export default function Connexion() {
             // Après la vérification réussie du login
             localStorage.setItem("user_role", user_role);
             const userRole = localStorage.getItem("user_role");
-            console.log(userRole);
+            // console.log(userRole);
+            console.log("Connexion réussie, redirection ... ")
             navigation.navigate("Home", { user });
           } else {
             // Échec de la connexion
             console.log("Identifiants invalides");
+
           }
         },
         (_, error) => {
           console.error("Error executing SQL query", error);
+
         }
       );
     });
   };
 
   return (
-    <View>
-      <View style={{ margin: 20 }}>
+    <View style={styles.background}>
+
+      <Text style = {styles.titre}> EasyOrga </Text>
+      <View style = {styles.container}>
+        <Text style={styles.texte}>Numéro de licence</Text>
         <TextInput
-          placeholder="Numéro de licence : "
+          style = {styles.textezone}
+          placeholder="..."
           value={numLicence}
           onChangeText={SetnumLicence}
         />
-
+        
+        <Text style={styles.texte}>Mot de passe</Text>
         <TextInput
-          style={{ marginTop: 15 }}
-          placeholder="Mot de passe : "
+          style = {styles.textezone}
+          placeholder="..."
           secureTextEntry
           value={Password}
           onChangeText={SetPassword}
-        />
+        />      
+      <TouchableOpacity
+        style = {styles.button}
+        onPress={() => handleLogin(numLicence, Password)}>
+        <Text style= {{color: 'white'}}>Se connecter</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Inscription")}>
+        <Text style= {{color: 'white'}}>S'inscrire</Text>
+      </TouchableOpacity>
       </View>
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => handleLogin(numLicence, Password)}
-      >
-        <Text style={styles.buttonText}>Se connecter</Text>
-      </TouchableOpacity>
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate("Inscription")}
-      >
-        <Text style={styles.buttonText}>Pas de compte ?</Text>
-      </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  button: {
-    backgroundColor: "blue",
-    padding: 10,
-    borderRadius: 5,
-    marginTop: 20,
-  },
-  buttonText: {
+  titre: {
+    fontSize: 25,
     color: "white",
-    textAlign: "center",
+    fontWeight: 'bold',
+    padding: 30,
+    },
+  background: {
+    flex: 1,
+    backgroundColor:  '#232c53',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
+  container: {
+    width: '75%'
+  },
+  button: {
+    backgroundColor: "#556297",
+    alignItems: 'center',
+    borderWidth: 1,
+    width: '100%',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginVertical: 10,
+  },
+  texte: {
+    color: 'white',
+  },
+  textezone: {
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderRadius: 5,
+    width: '100%',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginVertical: 10,
+  }
 });

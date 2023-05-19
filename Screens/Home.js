@@ -120,15 +120,22 @@ export default function Home({ route }) {
   const Separator = () => <View style={{ width: 12 }} />;
 
   const renderItem = ({ item }) => (
-    <View style={styles.item}>
-      <Text>ID : {item.ID_Evenement} </Text>
-      <Text>Type d'événement: {item.Type_Evenement}</Text>
-      <Text>Nom de l'événement: {item.Nom_evenement}</Text>
-      <Text>Lieu: {item.lieu_evenement}</Text>
-      <Text>Date: {item.date_evenement}</Text>
-      <Text>Heure de début: {item.heure_debut}</Text>
-      <Text>Heure de fin: {item.heure_fin}</Text>
-      <Text>Entraîneur: {item.entraineur}</Text>
+    <View style={styles.flatlist}>
+      <View style={styles.date}>
+        <Text>{item.date_evenement}</Text>
+      </View>
+
+      <View style = {{width: '40%', height: '30%'}}>
+        <Text style = {{fontSize: 16}}>{item.Nom_evenement}</Text>
+      </View>
+
+      <View>
+        <Text>Entraîneur: {item.entraineur}</Text>
+        <Text>Lieu: {item.lieu_evenement}</Text>
+      </View>
+
+      <Text>{item.heure_debut}h - {item.heure_fin}h</Text>
+      
 
       <TouchableOpacity
         onPress={() =>
@@ -152,6 +159,8 @@ export default function Home({ route }) {
     <View style={styles.container}>
       <Text>Welcome home, {user.User_prenom}! </Text>
 
+
+      <Text style = {{fontSize:25, color:'white'}}> Les évènements à venir </Text>
       <FlatList
         data={Data}
         renderItem={renderItem}
@@ -162,6 +171,8 @@ export default function Home({ route }) {
         contentContainerStyle={{ paddingHorizontal: 10 }}
       />
 
+    <Text style = {{fontSize:25, color:'white'}}> Photos </Text>
+
       <Text> Rien de spécial ici</Text>
 
       <StatusBar style="auto" />
@@ -170,9 +181,22 @@ export default function Home({ route }) {
 }
 
 const styles = StyleSheet.create({
+  date: {
+    borderWidth: 1,
+    backgroundColor: '#556297',
+    alignItems: 'center',
+
+  },
+  flatlist: {
+    width: ITEM_WIDTH,
+    height: ITEM_HEIGHT,
+    borderWidth: 1,
+    backgroundColor: 'white',
+  },
+
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#232c53",
     alignItems: "center",
     justifyContent: "center",
   },
