@@ -6,7 +6,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Text,
-  alert
+  alert,Image
 } from "react-native";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { useLayoutEffect } from "react";
@@ -58,7 +58,7 @@ export default function Connexion() {
 
   return (
     <View style={styles.background}>
-
+      <Image source={require("../Images/Logo.png")} style={styles.logo} />
       <Text style = {styles.titre}> EasyOrga </Text>
       <View style = {styles.container}>
         <Text style={styles.texte}>Numéro de licence</Text>
@@ -108,12 +108,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   container: {
-    width: '75%'
+    width: '80%'
   },
   button: {
     backgroundColor: "#556297",
     alignItems: 'center',
-    borderWidth: 1,
     width: '100%',
     paddingHorizontal: 20,
     paddingVertical: 10,
@@ -125,12 +124,17 @@ const styles = StyleSheet.create({
   },
   textezone: {
     backgroundColor: 'white',
-    borderWidth: 1,
     borderRadius: 5,
     width: '100%',
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 5,
     marginVertical: 10,
-  }
+  },
+  logo:{
+    alignSelf :"center",
+    width: 200,
+    height: 200,
+  }, 
+  
 });

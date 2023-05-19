@@ -9,10 +9,10 @@ const db = SQLite.openDatabase("ma_base_de_donnees.db");
 
 export default function App() {
   useEffect(() => {
-    // createTables();
-    // insertData();
-    // fetchData();
-    // DelData();
+     //createTables();
+     //insertData();
+     //fetchData();
+     //DelData();
   }, []);
 
   const createTables = () => {

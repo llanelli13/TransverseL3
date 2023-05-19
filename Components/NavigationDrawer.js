@@ -1,4 +1,5 @@
 import React from "react";
+import {StyleSheet } from 'react-native';
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
@@ -19,18 +20,35 @@ const Drawer = createDrawerNavigator();
 
 const NavigationDrawer = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer style={styles.background}>
       <Drawer.Navigator
-        initialRouteName="Connexion"
-        screenOptions={{ headerShown: true }}
+        initialRouteName="Calendar"
+        screenOptions={{ 
+          headerShown: true,
+          drawerStyle: {
+            backgroundColor: '#232c53',
+          },
+          headerTintColor: 'white',
+          drawerLabelStyle: {
+            color: 'white', // Change la couleur du texte dans la sidebar ici
+          },
+          headerTitleStyle: {
+            color: '#fff',
+          },
+
+        }}
+        
       >
         <Drawer.Screen
           name="Home"
           component={Home}
           options={{
             drawerIcon: ({ tintColor }) => (
-              <Feather name="home" size={16} color={tintColor} />
+              <Feather name="home" size={16} color={"white"} />
             ),
+            headerStyle: {
+              backgroundColor: '232c53', // Set the header background color to white
+            },
           }}
         />
         <Drawer.Screen
@@ -38,8 +56,11 @@ const NavigationDrawer = () => {
           component={Profil}
           options={{
             drawerIcon: ({ tintColor }) => (
-              <Feather name="user" size={16} color={tintColor} />
+              <Feather name="user" size={16} color={"white"} />
             ),
+            headerStyle: {
+              backgroundColor: '232c53', // Set the header background color to white
+            },
           }}
         />
         <Drawer.Screen
@@ -47,8 +68,11 @@ const NavigationDrawer = () => {
           component={AboutUs}
           options={{
             drawerIcon: ({ tintColor }) => (
-              <Feather name="info" size={16} color={tintColor} />
+              <Feather name="info" size={16} color={"white"} />
             ),
+            headerStyle: {
+              backgroundColor: '232c53', // Set the header background color to white
+            },
           }}
         />
         <Drawer.Screen
@@ -56,8 +80,11 @@ const NavigationDrawer = () => {
           component={ContactUs}
           options={{
             drawerIcon: ({ tintColor }) => (
-              <Feather name="mail" size={16} color={tintColor} />
+              <Feather name="mail" size={16} color={"white"} />
             ),
+            headerStyle: {
+              backgroundColor: '232c53', // Set the header background color to white
+            },
           }}
         />
         <Drawer.Screen
@@ -65,8 +92,12 @@ const NavigationDrawer = () => {
           component={CalendarScreen}
           options={{
             drawerIcon: ({ tintColor }) => (
-              <Feather name="calendar" size={16} color={tintColor} />
+              <Feather name="calendar" size={16} color={"white"} />
             ),
+            headerStyle: {
+              backgroundColor: '#232c53', // Set the header background color to white
+            },
+            headerTintColor: '#000000',
           }}
         />
         <Drawer.Screen
@@ -74,7 +105,7 @@ const NavigationDrawer = () => {
           component={Exit}
           options={{
             drawerIcon: ({ tintColor }) => (
-              <Feather name="log-out" size={16} color={tintColor} />
+              <Feather name="log-out" size={16} color={"white"} />
             ),
           }}
         />
@@ -83,7 +114,7 @@ const NavigationDrawer = () => {
           component={AddEvent}
           options={{
             drawerIcon: ({ tintColor }) => (
-              <Feather name="plus" size={16} color={tintColor} />
+              <Feather name="plus" size={16} color={"white"} />
             ),
           }}
         />
@@ -92,7 +123,7 @@ const NavigationDrawer = () => {
           component={Connexion}
           options={{
             drawerIcon: ({ tintColor }) => (
-              <Feather name="minus" size={16} color={tintColor} />
+              <Feather name="minus" size={16} color={"white"} />
             ),
             headerShown: false, // Enleve l'affichage du drawer
             swipeEnabled: false, // Empeche de swipe pour afficher le drawer
@@ -103,7 +134,7 @@ const NavigationDrawer = () => {
           component={Inscription}
           options={{
             drawerIcon: ({ tintColor }) => (
-              <Feather name="minus" size={16} color={tintColor} />
+              <Feather name="minus" size={16} color={"white"} />
             ),
             headerShown: false, // Enleve l'affichage du drawer
             swipeEnabled: false, // Empeche de swipe pour afficher le drawer
@@ -114,7 +145,7 @@ const NavigationDrawer = () => {
           component={PresenceComponent}
           options={{
             drawerIcon: ({ tintColor }) => (
-              <Feather name="minus" size={16} color={tintColor} />
+              <Feather name="minus" size={16} color={"white"} />
             ),
           }}
         />
@@ -123,7 +154,7 @@ const NavigationDrawer = () => {
           component={ChoixEvent}
           options={{
             drawerIcon: ({ tintColor }) => (
-              <Feather name="minus" size={16} color={tintColor} />
+              <Feather name="minus" size={16} color={"white"} />
             ),
           }}
         />
@@ -138,5 +169,12 @@ const NavigationDrawer = () => {
     </NavigationContainer>
   );
 };
+
+const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    backgroundColor:  '#232c53',
+  }
+});
 
 export default NavigationDrawer;

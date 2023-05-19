@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button,StyleSheet } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import * as SQLite from 'expo-sqlite';
 
@@ -43,13 +43,14 @@ export default function CalendarScreen() {
   };
 
   const renderEventItem = event => (
-    <View key={event.id}>
-      <Text>{event.title}</Text>
-      <Text>Date: {event.date}</Text>
-      <Text>Heure de début: {event.startTime}</Text>
-      <Text>Heure de fin: {event.endTime}</Text>
-      <Text>Lieu: {event.location}</Text>
-    </View>
+
+        <View key={event.id}>
+          <Text>{event.title}</Text>
+          <Text>Date: {event.date}</Text>
+          <Text>Heure de début: {event.startTime}</Text>
+          <Text>Heure de fin: {event.endTime}</Text>
+          <Text>Lieu: {event.location}</Text>
+        </View>
 );
 
     const markedDates = {};
@@ -64,8 +65,25 @@ export default function CalendarScreen() {
         setSelectedEvent(event);
         };
 
+        const styles = StyleSheet.create({
+          
+          background: {
+            flex: 1,
+            backgroundColor:  '#232c53',
+            alignItems: 'center',
+            
+          },
+          container: {
+            width: '80%',
+            marginTop :30,
+          },
+          
+        });
+
     return (
-        <View>
+      
+        <View style={styles.background}>
+          <View style={styles.container}>
             <Calendar markedDates={markedDates} onDayPress={handleDayPress} />
         {selectedEvent && (
             <View>
@@ -73,6 +91,9 @@ export default function CalendarScreen() {
                 <Button title="Fermer" onPress={() => setSelectedEvent(null)} />
             </View>
         )}
+        </View>
     </View>
     );
+
+    
 }

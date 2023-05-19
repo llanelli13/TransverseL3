@@ -41,6 +41,7 @@ export default function Inscription () {
 
     return (
         <View style= {styles.background}>  
+        <Text style = {styles.titre}> Inscription </Text>
             <View style = {styles.container}>
                 <TextInput
                     style = {styles.textezone}
@@ -76,7 +77,7 @@ export default function Inscription () {
                 <TouchableOpacity 
                     style = {styles.button}
                     onPress={AddUser}>
-                    <Text> S'inscrire </Text>
+                    <Text style={{color : "white"}}> S'inscrire </Text>
                 </TouchableOpacity>
             </View>              
         </View>
@@ -91,12 +92,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
       },
       container: {
-        width: '75%'
+        width: '80%'
       },
       textezone: {
         backgroundColor: 'white',
-        borderWidth: 1,
-        borderRadius: 5,
+
         width: '100%',
         paddingHorizontal: 20,
         paddingVertical: 10,
@@ -106,7 +106,6 @@ const styles = StyleSheet.create({
       button: {
         backgroundColor: "#556297",
         alignItems: 'center',
-        borderWidth: 1,
         width: '100%',
         paddingHorizontal: 20,
         paddingVertical: 10,
@@ -114,4 +113,12 @@ const styles = StyleSheet.create({
         marginVertical: 10,
       },
 
+      titre : {
+        fontSize: 30,
+        fontWeight: "bold",
+        color : "white",
+        textAlign : "center", 
+        marginTop : 40,  
+        marginBottom : 40,  
+      },
 })
