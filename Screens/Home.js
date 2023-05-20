@@ -21,7 +21,7 @@ moment.locale('fr');
 
 
 const ITEM_WIDTH = 300;
-const ITEM_HEIGHT = 270;
+
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -278,15 +278,17 @@ export default function Home({ route}) {
       <View style={styles.heure}>
         <Text style = {{fontSize:25, color:'white'}}  >{item.heure_debut}h - {item.heure_fin}h</Text>
       </View>
-
-      <TouchableOpacity onPress={() => handleParticipateClick(item.ID_Evenement, user.num_Licence)} style={{ marginTop: 15 }}>
-        <Text>Je participe</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity onPress={() => DelEvent(item.ID_Evenement)} style={{ marginTop: 10 }}>
-        <Text> Delete Event </Text>
-      </TouchableOpacity>
-    
+      
+      <View style={styles.heure}>
+        <TouchableOpacity onPress={() => handleParticipateClick(item.ID_Evenement, user.num_Licence)} style={{ margin: 15 }}>
+          <Text>Je participe</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.heure}>
+        <TouchableOpacity onPress={() => DelEvent(item.ID_Evenement)} style={{ margin: 10 }}>
+          <Text> Delete Event </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   )};
 
@@ -312,11 +314,7 @@ export default function Home({ route}) {
           <Text style = {{fontSize:25, color:'white', marginBottom: 10 }}>Galerie de photos</Text>
           <ScrollView>{renderImages()}</ScrollView>
         </View>
-
-        <View style={styles.footer}>
-          <Image source={require("../Images/Footer.png")} style={styles.logo}/>
-        </View>
-        <StatusBar style="auto" />
+        <Image source={require("../Images/Footer.png")} style={styles.logo}/>
       </ScrollView>
     </View>
     </View>
@@ -342,7 +340,7 @@ const styles = StyleSheet.create({
   },
   flatlist: {
     width: ITEM_WIDTH,
-    height: ITEM_HEIGHT,
+
     borderWidth: 1,
     backgroundColor: 'white',
   },
@@ -358,7 +356,6 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginBottom: 15,
     width: ITEM_WIDTH,
-    height: ITEM_HEIGHT,
     backgroundColor: "lightblue",
     margin: 5,
     alignItems: "center",
@@ -382,16 +379,10 @@ const styles = StyleSheet.create({
   },
   
   logo: {
+
     alignSelf: "center",
     resizeMode: "contain",
     width: screenWidth,
+    height : 75, 
   },
-  footer : {
-    flex: 1,
-    justifyContent: "center",
-    position: "absolute",
-    left: 0,
-    right: 0,
-    bottom: 0,
-  }
 });
