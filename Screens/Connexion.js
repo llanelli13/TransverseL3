@@ -70,6 +70,9 @@ export default function Connexion() {
 
   return (
     <View style={styles.background}>
+
+
+      
       <Image source={require("../Images/Logo.png")} style={styles.logo} />
       <Text style = {styles.titre}> EasyOrga </Text>
       <View style = {styles.container}>

@@ -22,7 +22,7 @@ const NavigationDrawer = () => {
   return (
     <NavigationContainer style={styles.background}>
       <Drawer.Navigator
-        initialRouteName="Connexion"
+        initialRouteName="Add"
         screenOptions={{ 
           headerShown: true,
           drawerStyle: {
