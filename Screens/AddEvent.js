@@ -97,54 +97,75 @@ export default function AddEvent() {
   };
 
   return (
-    <View>
-      {/* <AdminCheck /> */}
-      <TextInput placeholder="Nom :" value={Nom} onChangeText={Setnom} />
+    <View style = {styles.background}>
+      <View style = {{width: '75%'}}>
+      <TextInput 
+        style = {styles.textezone} 
+        placeholder="Sport :" 
+        value={Nom} 
+        onChangeText={Setnom} />
 
-      <TextInput placeholder="Lieu :" value={Lieu} onChangeText={SetLieu} />
+      <TextInput 
+        style = {styles.textezone} 
+        placeholder="Lieu :" 
+        value={Lieu} 
+        onChangeText={SetLieu} />
 
       <TextInput
+        style = {styles.textezone} 
         placeholder="Entraineur :"
         value={Trainer}
         onChangeText={setTrainer}
       />
 
-      <TextInput
-        keyboardType="numeric"
-        placeholder="Jour :"
-        value={Jour}
-        onChangeText={SetJour}
-      />
+      <View style = {{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <TextInput
+          style = {styles.textezone2} 
+          keyboardType="numeric"
+          placeholder="Jour :"
+          value={Jour}
+          onChangeText={SetJour}
+        />
 
-      <TextInput
-        keyboardType="numeric"
-        placeholder="Mois :"
-        value={Mois}
-        onChangeText={SetMois}
-      />
+        <TextInput
+          style = {styles.textezone2} 
+          keyboardType="numeric"
+          placeholder="Mois :"
+          value={Mois}
+          onChangeText={SetMois}
+        />
 
-      <TextInput
-        keyboardType="numeric"
-        placeholder="Année :"
-        value={Annee}
-        onChangeText={SetAnnee}
-      />
+        <TextInput
+          style = {styles.textezone2} 
+          keyboardType="numeric"
+          placeholder="Année :"
+          value={Annee}
+          onChangeText={SetAnnee}
+        />
+      </View>
 
-      <TextInput
-        keyboardType="numeric"
-        placeholder="Heure de début :"
-        value={Heure_Debut}
-        onChangeText={SetHeure_Debut}
-      />
+        <View style = {{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <TextInput
+            style = {styles.textezone2} 
+            keyboardType="numeric"
+            placeholder="Début :"
+            value={Heure_Debut}
+            onChangeText={SetHeure_Debut}
+          />
 
-      <TextInput
-        keyboardType="numeric"
-        placeholder="Heure de fin :"
-        value={Heure_Fin}
-        onChangeText={SetHeure_Fin}
-      />
+          <TextInput
+            style =  {styles.textezone2}
+            keyboardType="numeric"
+            placeholder="Fin :"
+            value={Heure_Fin}
+            onChangeText={SetHeure_Fin}
+          />
+        </View>
+      </View>
+      
+ 
 
-      <TouchableOpacity onPress={addEvent} style={{ marginTop: 50 }}>
+      <TouchableOpacity onPress={addEvent} style={styles.button}>
         <Text> Add Event </Text>
       </TouchableOpacity>
       <Image source={require("../Images/Footer.png")} style={styles.logo} />
@@ -154,14 +175,42 @@ export default function AddEvent() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  textezone: {
+    backgroundColor: 'white',
+    borderRadius: 5,
     width: "100%",
-    flexDirection: "row",
-    justifyContent: "flex-start",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginVertical: 10,
+  },
+  textezone2: {
+    backgroundColor: 'white',
+    borderRadius: 5,
+    width: "30%",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginVertical: 10,
   },
   logo: {
     alignSelf: "center",
     resizeMode: 'contain',
     flex: 0.2,
+  },
+  background: {
+    flex: 1,
+    backgroundColor: "#232c53",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  button: {
+    backgroundColor: "#556297",
+    alignItems: 'center',
+    width: '75%',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginVertical: 10,
   },
 });

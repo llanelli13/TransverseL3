@@ -11,8 +11,6 @@ import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 
 export default function AboutUs() {
-  const userRole = localStorage.getItem("user_role");
-  console.log(userRole);
   return (
     <View>
       <Text>
