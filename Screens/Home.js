@@ -19,7 +19,7 @@ moment.locale('fr');
 
 
 const ITEM_WIDTH = 300;
-const ITEM_HEIGHT = 225;
+const ITEM_HEIGHT = 270;
 
 export default function Home({ route}) {
   const { user } = route.params;
@@ -177,48 +177,43 @@ export default function Home({ route}) {
   const renderItem = ({ item }) => {
     // ...
   
-    const formattedDate = moment(item.date_evenement).format('dddd D MMMM');
+    const formattedDate = moment(item.date_evenement).format('dddd D MMMM').replace(/^(.)(.*)$/, (_, firstChar, restOfString) =>
+    firstChar.toUpperCase() + restOfString.toLowerCase()).replace(/\b\w/g, (c) => c.toUpperCase());
     return (  
 
     <View style={styles.flatlist}>
+
       <View style={styles.date}>
-      <Text style={{ fontSize: 30 }}>{formattedDate}</Text>
+        <Text style = {{fontSize:25, color:'white', padding:4}}>{formattedDate}</Text>
       </View>
 
-    <View style = {{flexDirection: 'row'}}>
-        <View style = {{width: '50%', height: '100%', justifyContent: 'center', alignItems: 'center'}}>
-          <Text style = {{fontSize: 16}}>{item.Type_Evenement}</Text>
-        </View>
-        <View style = {{width: '50%', height: '100%', justifyContent: 'center', alignItems:'center'}}>
-          <Image source={getImageSource(item.Type_Evenement)} 
-               style={{ width: 80, height: 80 }} />
-        </View>
-    </View>
+      <View style = {{flexDirection: 'row'}}>
+          <View style = {{width: '50%',  justifyContent: 'center', alignItems: 'center', marginTop : 15}}>
+            <Text style = {{fontSize: 16}}>{item.Type_Evenement}</Text>
+          </View>
+          <View style = {{width: '50%',  justifyContent: 'center', alignItems:'center', marginTop : 15,marginBottom : 15}}>
+            <Image source={getImageSource(item.Type_Evenement)} 
+                style={{ width: 80, height: 80 }} />
+          </View>
+      </View>
 
 
       <View>
-        <Text>Entraîneur: {item.entraineur}</Text>
-        <Text>Lieu: {item.lieu_evenement}</Text>
+        <Text style={styles.info}>Responsable: {item.entraineur}</Text>
+        <Text style={styles.info}>Lieu: {item.lieu_evenement}</Text>
+      </View>
+      <View style={styles.heure}>
+        <Text style = {{fontSize:25, color:'white'}}  >{item.heure_debut}h - {item.heure_fin}h</Text>
       </View>
 
-      <Text>{item.heure_debut}h - {item.heure_fin}h</Text>
-      
-
-      <TouchableOpacity
-        onPress={() =>
-          handleParticipateClick(item.ID_Evenement, user.num_Licence)
-        }
-        style={{ marginTop: 15 }}
-      >
+      <TouchableOpacity onPress={() => handleParticipateClick(item.ID_Evenement, user.num_Licence)} style={{ marginTop: 15 }}>
         <Text>Je participe</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity
-        onPress={() => DelEvent(item.ID_Evenement)}
-        style={{ marginTop: 10 }}
-      >
+      <TouchableOpacity onPress={() => DelEvent(item.ID_Evenement)} style={{ marginTop: 10 }}>
         <Text> Delete Event </Text>
       </TouchableOpacity>
+    
     </View>
   )};
 
@@ -227,7 +222,7 @@ export default function Home({ route}) {
       <Text>Welcome home, {user.User_prenom}! </Text>
 
 
-      <Text style = {{fontSize:25, color:'white'}}> Les évènements à venir </Text>
+      <Text style = {{fontSize:25, color:'white', marginBottom : 20}}> Les évènements à venir </Text>
       <FlatList
         data={Data}
         renderItem={renderItem}
@@ -247,10 +242,20 @@ export default function Home({ route}) {
 }
 
 const styles = StyleSheet.create({
-  date: {
+  date : {
     backgroundColor: '#556297',
     alignItems: 'center',
-
+  },
+  
+  heure: {
+    backgroundColor: '#556297',
+    alignItems: 'center',
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginHorizontal: 60,
+  },
+  info :{
+    marginBottom : 10,
   },
   flatlist: {
     width: ITEM_WIDTH,
@@ -295,6 +300,6 @@ const styles = StyleSheet.create({
   logo: {
     alignSelf: "center",
     resizeMode: 'contain',
-    flex: 0.2,
+    flex: 0.25,
   },
 });
