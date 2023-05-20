@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import { StyleSheet, Text, View, FlatList,ScrollView } from "react-native";
 import React, { useState, useEffect, useDebugValue } from "react";
 import {
   Alert,
@@ -12,6 +12,8 @@ import * as SQLite from "expo-sqlite";
 import * as Permissions from "expo-permissions";
 import * as Calendar from "expo-calendar";
 import moment from 'moment';
+import { Dimensions } from "react-native";
+
 import 'moment/locale/fr';
 
 
@@ -21,9 +23,45 @@ moment.locale('fr');
 const ITEM_WIDTH = 300;
 const ITEM_HEIGHT = 270;
 
+const screenWidth = Dimensions.get("window").width;
+
+
 export default function Home({ route}) {
   const { user } = route.params;
   const [Data, setData] = useState([]);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(null); // Ajout de la variable selectedImageIndex
+  const handlePhotoPress = (index) => {
+    setSelectedImageIndex(index);
+  };
+  const images = [
+    require("../Images/galerie/1.jpg"),
+    require("../Images/galerie/2.jpg"),
+    require("../Images/galerie/3.jpg"),
+    require("../Images/galerie/4.jpg"),
+    require("../Images/galerie/5.jpg"),
+    require("../Images/galerie/6.jpg"),
+    require("../Images/galerie/7.jpg"),
+    require("../Images/galerie/8.jpg"),
+    require("../Images/galerie/9.jpg"),
+    require("../Images/galerie/10.jpg"),
+    require("../Images/galerie/11.jpg"),
+    require("../Images/galerie/12.jpg"),
+    require("../Images/galerie/13.jpg"),
+    require("../Images/galerie/14.jpg"),
+    require("../Images/galerie/15.jpg"),
+  
+  ];
+  
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  
+  const handleImagePress = (index) => {
+    setCurrentImageIndex(index);
+  };
+  
+
+
+
+
 
   useEffect(() => {
     fetchDataFromDatabase();
@@ -168,7 +206,42 @@ export default function Home({ route}) {
   const Separator = () => <View style={{ width: 12 }} />;
 
 
+  const renderImages = () => {
+    const rows = [];
+    const itemsPerRow = 3;
+    const rowsCount = Math.ceil(images.length / itemsPerRow);
 
+    for (let i = 0; i < rowsCount; i++) {
+      const rowItems = [];
+      const startIndex = i * itemsPerRow;
+      const endIndex = Math.min(startIndex + itemsPerRow, images.length);
+      for (let j = startIndex; j < endIndex; j++) {
+        rowItems.push(
+          <TouchableOpacity
+            key={j}
+            onPress={() => handleImagePress(j)}
+            style={{ margin: 5 }}
+          >
+            <Image source={images[j]} style={{ width: 100, height: 100 }} />
+          </TouchableOpacity>
+        );
+      }
+      rows.push(
+        <View
+          key={i}
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            marginBottom: 10,
+          }}
+        >
+          {rowItems}
+        </View>
+      );
+    }
+
+    return rows;
+  };
   
 
 
@@ -218,26 +291,36 @@ export default function Home({ route}) {
   )};
 
   return (
+    <View style={{ flex: 1 }}>
     <View style={styles.container}>
-      <Text>Welcome home, {user.User_prenom}! </Text>
+      <ScrollView>
 
+        <Text>Welcome home, {user.User_prenom}! </Text>
 
-      <Text style = {{fontSize:25, color:'white', marginBottom : 20}}> Les évènements à venir </Text>
-      <FlatList
-        data={Data}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.ID_Evenement.toString()}
-        ItemSeparatorComponent={Separator}
-        horizontal
-        style={{ alignSelf: "center" }}
-        contentContainerStyle={{ paddingHorizontal: 10 }}
-      />
+        <Text style = {{fontSize:25, color:'white', marginBottom : 20}}> Les évènements à venir </Text>
+        <FlatList
+          data={Data}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.ID_Evenement.toString()}
+          ItemSeparatorComponent={Separator}
+          horizontal
+          style={{ alignSelf: "center" }}
+          contentContainerStyle={{ paddingHorizontal: 10 }}
+        />
 
-    <Text style = {{fontSize:25, color:'white'}}> Photos </Text>
+        <View style={{ marginTop: 10 }}>
+          <Text style = {{fontSize:25, color:'white', marginBottom: 10 }}>Galerie de photos</Text>
+          <ScrollView>{renderImages()}</ScrollView>
+        </View>
 
-    <Image source={require("../Images/Footer.png")} style={styles.logo} />
-      <StatusBar style="auto" />
+        <View style={styles.footer}>
+          <Image source={require("../Images/Footer.png")} style={styles.logo}/>
+        </View>
+        <StatusBar style="auto" />
+      </ScrollView>
     </View>
+    </View>
+
   );
 }
 
@@ -265,6 +348,7 @@ const styles = StyleSheet.create({
   },
 
   container: {
+    flexGrow: 1,
     flex: 1,
     backgroundColor: "#232c53",
     // alignItems: "center",
@@ -299,7 +383,15 @@ const styles = StyleSheet.create({
   
   logo: {
     alignSelf: "center",
-    resizeMode: 'contain',
-    flex: 0.25,
+    resizeMode: "contain",
+    width: screenWidth,
   },
+  footer : {
+    flex: 1,
+    justifyContent: "center",
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
+  }
 });
