@@ -98,6 +98,9 @@ export default function AddEvent() {
 
   return (
     <View style = {styles.background}>
+
+      <Text style = {{fontSize: 25, color: 'white', padding: 30}}> Nouvel évènement </Text>
+
       <View style = {{width: '75%'}}>
       <TextInput 
         style = {styles.textezone} 
