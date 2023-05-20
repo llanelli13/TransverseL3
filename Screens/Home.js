@@ -11,6 +11,12 @@ import {
 import * as SQLite from "expo-sqlite";
 import * as Permissions from "expo-permissions";
 import * as Calendar from "expo-calendar";
+import moment from 'moment';
+import 'moment/locale/fr';
+
+
+moment.locale('fr');
+
 
 const ITEM_WIDTH = 300;
 const ITEM_HEIGHT = 225;
@@ -161,10 +167,22 @@ export default function Home({ route}) {
   
   const Separator = () => <View style={{ width: 12 }} />;
 
-  const renderItem = ({ item }) => (
+
+
+  
+
+
+
+
+  const renderItem = ({ item }) => {
+    // ...
+  
+    const formattedDate = moment(item.date_evenement).format('dddd D MMMM');
+    return (  
+
     <View style={styles.flatlist}>
       <View style={styles.date}>
-        <Text>{item.date_evenement}</Text>
+      <Text style={{ fontSize: 30 }}>{formattedDate}</Text>
       </View>
 
     <View style = {{flexDirection: 'row'}}>
@@ -202,7 +220,7 @@ export default function Home({ route}) {
         <Text> Delete Event </Text>
       </TouchableOpacity>
     </View>
-  );
+  )};
 
   return (
     <View style={styles.container}>
@@ -222,8 +240,7 @@ export default function Home({ route}) {
 
     <Text style = {{fontSize:25, color:'white'}}> Photos </Text>
 
-      <Text> Rien de spécial ici</Text>
-
+    <Image source={require("../Images/Footer.png")} style={styles.logo} />
       <StatusBar style="auto" />
     </View>
   );
@@ -231,7 +248,6 @@ export default function Home({ route}) {
 
 const styles = StyleSheet.create({
   date: {
-    borderWidth: 1,
     backgroundColor: '#556297',
     alignItems: 'center',
 
@@ -274,5 +290,11 @@ const styles = StyleSheet.create({
   },
   contenu: {
     margin: 10,
+  },
+  
+  logo: {
+    alignSelf: "center",
+    resizeMode: 'contain',
+    flex: 0.2,
   },
 });

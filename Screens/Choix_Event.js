@@ -3,6 +3,7 @@ import { Alert, TextInput, Button, TouchableOpacity, Image, FlatList, View, Text
 import * as SQLite from 'expo-sqlite';
 import { useNavigation } from '@react-navigation/native';
 import { DrawerActions } from '@react-navigation/native';
+import { StatusBar } from "expo-status-bar";
 
 
 export default function ChoixEvent () {
@@ -62,6 +63,20 @@ export default function ChoixEvent () {
       
 
     const Separator = () => <View style={{ width: 25 }} />;
+
+    const styles = StyleSheet.create({
+      container: {
+        width: "100%",
+        flexDirection: "row",
+        justifyContent: "flex-start",
+      },
+      logo: {
+        alignSelf: "center",
+        resizeMode: 'contain',
+        flex: 0.2,
+      },
+    });
+    
 
 
     return (

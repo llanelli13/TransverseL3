@@ -22,19 +22,16 @@ const NavigationDrawer = () => {
   return (
     <NavigationContainer style={styles.background}>
       <Drawer.Navigator
-        initialRouteName="Calendar"
+        initialRouteName="Connexion"
         screenOptions={{ 
           headerShown: true,
           drawerStyle: {
             backgroundColor: '#232c53',
           },
-          headerTintColor: 'white',
           drawerLabelStyle: {
             color: 'white', // Change la couleur du texte dans la sidebar ici
           },
-          headerTitleStyle: {
-            color: '#fff',
-          },
+          headerTintColor : "white",
 
         }}
         
@@ -47,7 +44,7 @@ const NavigationDrawer = () => {
               <Feather name="home" size={16} color={"white"} />
             ),
             headerStyle: {
-              backgroundColor: '232c53', // Set the header background color to white
+              backgroundColor: '#232c53', // Set the header background color to white
             },
           }}
         />
@@ -59,7 +56,7 @@ const NavigationDrawer = () => {
               <Feather name="user" size={16} color={"white"} />
             ),
             headerStyle: {
-              backgroundColor: '232c53', // Set the header background color to white
+              backgroundColor: '#232c53', // Set the header background color to white
             },
           }}
         />
@@ -71,7 +68,7 @@ const NavigationDrawer = () => {
               <Feather name="info" size={16} color={"white"} />
             ),
             headerStyle: {
-              backgroundColor: '232c53', // Set the header background color to white
+              backgroundColor: '#232c53', // Set the header background color to white
             },
           }}
         />
@@ -83,7 +80,7 @@ const NavigationDrawer = () => {
               <Feather name="mail" size={16} color={"white"} />
             ),
             headerStyle: {
-              backgroundColor: '232c53', // Set the header background color to white
+              backgroundColor: '#232c53', // Set the header background color to white
             },
           }}
         />
@@ -97,7 +94,6 @@ const NavigationDrawer = () => {
             headerStyle: {
               backgroundColor: '#232c53', // Set the header background color to white
             },
-            headerTintColor: '#000000',
           }}
         />
         <Drawer.Screen
@@ -107,6 +103,9 @@ const NavigationDrawer = () => {
             drawerIcon: ({ tintColor }) => (
               <Feather name="log-out" size={16} color={"white"} />
             ),
+            headerStyle: {
+              backgroundColor: '#232c53', // Set the header background color to white
+            },
           }}
         />
         <Drawer.Screen
@@ -116,6 +115,9 @@ const NavigationDrawer = () => {
             drawerIcon: ({ tintColor }) => (
               <Feather name="plus" size={16} color={"white"} />
             ),
+            headerStyle: {
+              backgroundColor: '#232c53', // Set the header background color to white
+            },
           }}
         />
         <Drawer.Screen
@@ -147,6 +149,9 @@ const NavigationDrawer = () => {
             drawerIcon: ({ tintColor }) => (
               <Feather name="minus" size={16} color={"white"} />
             ),
+            headerStyle: {
+              backgroundColor: '#232c53', // Set the header background color to white
+            },
           }}
         />
         <Drawer.Screen
@@ -156,6 +161,9 @@ const NavigationDrawer = () => {
             drawerIcon: ({ tintColor }) => (
               <Feather name="minus" size={16} color={"white"} />
             ),
+            headerStyle: {
+              backgroundColor: '#232c53', // Set the header background color to white
+            },
           }}
         />
         <Drawer.Screen

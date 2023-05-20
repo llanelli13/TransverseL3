@@ -81,5 +81,10 @@ const styles = StyleSheet.create({
     test: {
         display: 'flex',
         flexDirection: 'row',
-    }
+    },
+    logo: {
+      alignSelf: "center",
+      resizeMode: 'contain',
+      flex: 0.2,
+    },
 })

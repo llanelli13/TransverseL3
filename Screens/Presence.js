@@ -112,4 +112,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     flex: 1,
   },
+    logo: {
+      alignSelf: "center",
+      resizeMode: 'contain',
+      flex: 0.2,
+    },  
 });

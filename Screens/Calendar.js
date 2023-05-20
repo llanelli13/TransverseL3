@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button,StyleSheet } from 'react-native';
+import { View, Text, Button,StyleSheet,Image } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import * as SQLite from 'expo-sqlite';
+import { StatusBar } from "expo-status-bar";
 
 export default function CalendarScreen() {
   const [events, setEvents] = useState([]);
@@ -77,6 +78,11 @@ export default function CalendarScreen() {
             width: '80%',
             marginTop :30,
           },
+          logo: {
+            alignSelf: "center",
+            resizeMode: 'contain',
+            flex: 0.2,
+          },
           
         });
 
@@ -92,6 +98,9 @@ export default function CalendarScreen() {
             </View>
         )}
         </View>
+        <Image source={require("../Images/Footer.png")} style={styles.logo} />
+        <StatusBar style="auto" />
+
     </View>
     );
 

@@ -3,10 +3,11 @@ import {
   Text,
   TextInput,
   View,
-  TouchableOpacity,
+  TouchableOpacity,Image
 } from "react-native";
 import { useState } from "react";
 import * as SQLite from "expo-sqlite";
+import { StatusBar } from "expo-status-bar";
 // import AdminCheck from "../Components/AdminCheck";
 
 export default function AddEvent() {
@@ -146,6 +147,8 @@ export default function AddEvent() {
       <TouchableOpacity onPress={addEvent} style={{ marginTop: 50 }}>
         <Text> Add Event </Text>
       </TouchableOpacity>
+      <Image source={require("../Images/Footer.png")} style={styles.logo} />
+      <StatusBar style="auto" />
     </View>
   );
 }
@@ -155,5 +158,10 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
     justifyContent: "flex-start",
+  },
+  logo: {
+    alignSelf: "center",
+    resizeMode: 'contain',
+    flex: 0.2,
   },
 });
