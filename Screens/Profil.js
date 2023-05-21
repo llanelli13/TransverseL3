@@ -128,7 +128,7 @@ export default function Profil({ route }) {
         />
         <Text style={styles.replyInfo}>
           Après toute tentative de changement d'informations, il vous sera
-          demandé de vous reconnecter.{"2\n"}
+          demandé de vous reconnecter.{"\n"}
         </Text>
         <Button
           title="Enregistrer"
