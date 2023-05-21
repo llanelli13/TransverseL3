@@ -1,90 +1,168 @@
-import { StyleSheet, View, TextInput, Button, SafeAreaView, TouchableOpacity, Text, Image } from 'react-native';
-import {FontAwesome5, Ionicons} from "@expo/vector-icons";
-import { useLayoutEffect } from 'react';
-import React, { useState, useEffect, useContext } from 'react';
 
-
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  Button,
+  SafeAreaView,
+  TouchableOpacity,
+  Text,
+  Image,
+} from "react-native";
+import { FontAwesome5, Ionicons } from "@expo/vector-icons";
+import { useLayoutEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { useRoute } from "@react-navigation/native";
+import * as SQLite from "expo-sqlite";
 const ITEM_WIDTH = 150;
-
-
-export default function Profil () {  
-
-    // const db = SQLite.openDatabase({name: 'mydb.db', location: 'default'});
-
-    const [Licence, SetLicence] = useState("");
-    const [Mail, SetMail] = useState("");
-
-    // const MAJ = () => {
-    //     db.transaction(txn =>{
-    //         txn.executeSQL(
-    //             "Update table USER where ID_licence"
-    //         )
-    //     })
-
-    // }
-    return (
-        <View>
-            <View style={{alignContent: 'center', alignItems: 'center', marginTop: 25}}>
-               <Image 
-                style={styles.image}
-                source={require('../assets/profil.png')}/> 
-            </View>
-            <View style={{margin: 25}}>
-                <TextInput 
-                    placeholder="Identifiant : "
-                    value={Licence}
-                    onChangeText={SetLicence}/>
-                <TextInput
-                    placeholder="mail : "
-                    value={Mail}
-                    onChangeText={SetMail} />
-                <TextInput
-                    placeholder="Licence : "
-                    value={Licence}
-                    onChangeText={SetLicence} /> 
-            </View>
- 
-        </View>
-    );
+export default function Profil({ route }) {
+  // const db = SQLite.openDatabase({name: 'mydb.db', location: 'default'});
+  const { user } = route.params;
+  const [numLicence, setNumLicence] = useState(user.num_Licence);
+  const [prenom, setPrenom] = useState(user.User_prenom);
+  const [nom, setNom] = useState(user.User_nom);
+  const [email, setEmail] = useState(user.User_mail);
+  const [password, setPassword] = useState(user.User_passwords);
+  const db = SQLite.openDatabase("ma_base_de_donnees.db");
+  // const MAJ = () => {
+  //     db.transaction(txn =>{
+  //         txn.executeSQL(
+  //             "Update table USER where ID_licence"
+  //         )
+  //     })
+  // }
+  const modifierInformations = () => {
+    return new Promise((resolve, reject) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "UPDATE User SET User_prenom = ?, User_nom = ?, User_mail = ?,  User_passwords = ?",
+          [prenom, nom, email, password],
+          (tx, results) => {
+            if (results.rowsAffected > 0) {
+              resolve(true);
+            } else {
+              resolve(false);
+            }
+          },
+          (error) => {
+            reject(error);
+          }
+        );
+      });
+    });
+  };
+  const handleEnregistrer = async () => {
+    try {
+      const success = await modifierInformations();
+      if (success) {
+        // Les informations ont été modifiées avec succès
+        // Vous pouvez afficher un message de succès ou effectuer d'autres actions
+        console.log("good");
+        navigation.navigate("Connexion");
+      } else {
+        // La modification des informations a échoué
+        // Vous pouvez afficher un message d'erreur ou effectuer d'autres actions
+      }
+    } catch (error) {
+      console.log(error);
+      // Erreur lors de l'exécution de la requête SQL, gérer l'erreur appropriée
+    }
+  };
+  return (
+    <View style={styles.container}>
+      <Text style={styles.titre}>Profil de l'utilisateur</Text>
+      <View style={styles.informations}>
+        <Text style={styles.label}>Numéro de licence:</Text>
+        <Text>{user.num_Licence}</Text>
+        <Text style={styles.label}>Prénom:</Text>
+        <Text>{user.User_prenom}</Text>
+        <Text style={styles.label}>Nom:</Text>
+        <Text>{user.User_nom}</Text>
+        <Text style={styles.label}>Adresse e-mail:</Text>
+        <Text>{user.User_mail}</Text>
+        <Text style={styles.label}>Mot de passe:</Text>
+        <Text>********</Text>
+      </View>
+      <View style={styles.formulaire}>
+        <Text style={styles.label}>Nouveau prénom:</Text>
+        <TextInput
+          style={styles.input}
+          value={prenom}
+          onChangeText={setPrenom}
+          placeholder="Nouveau prénom"
+        />
+        <Text style={styles.label}>Nouveau nom:</Text>
+        <TextInput
+          style={styles.input}
+          value={nom}
+          onChangeText={setNom}
+          placeholder="Nouveau nom"
+        />
+        <Text style={styles.label}>Nouvelle adresse e-mail:</Text>
+        <TextInput
+          style={styles.input}
+          value={email}
+          onChangeText={setEmail}
+          placeholder="Nouvelle adresse e-mail"
+        />
+        <Text style={styles.label}>Nouveau mot de passe:</Text>
+        <TextInput
+          style={styles.input}
+          value={password}
+          onChangeText={setPassword}
+          placeholder="Nouveau mot de passe"
+          secureTextEntry
+        />
+        <Text style={styles.replyInfo}>
+          Après toute tentative de changement d'informations, il vous sera
+          demandé de vous reconnecter.{"\n"}
+        </Text>
+        <Button
+          title="Enregistrer"
+          onPress={handleEnregistrer}
+          color="#232c53"
+        />
+      </View>
+    </View>
+  );
 }
-
 const styles = StyleSheet.create({
-    image: {
-        width: ITEM_WIDTH,
-        height: ITEM_WIDTH,
-        margin: 5,
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: ITEM_WIDTH / 2,
-
-    },
-    input:{
-        padding: 5,
-        margin:5,
-        borderWidth: 0.2,
-
-    },
-    container: {
-        flexDirection: 'column',
-        flex: 1,
-        backgroundColor: "#FFF",
-    },
-    text: {
-        color:"#161924",
-        fontSize: 20,
-        fontWeight: "500",
-    },
-    texte:{
-        fontWeight: 'bold',
-        fontSize: 24,
-    },
-    test: {
-        display: 'flex',
-        flexDirection: 'row',
-    },
-    logo: {
-      alignSelf: "center",
-      resizeMode: 'contain',
-      flex: 0.2,
-    },
-})
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  replyInfo: {
+    marginTop: 10,
+    fontStyle: "italic",
+    color: "#888",
+  },
+  titre: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 20,
+    color: "#232c53",
+  },
+  informations: {
+    marginBottom: 20,
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: "#f2f2f2",
+  },
+  label: {
+    fontSize: 16,
+    marginBottom: 5,
+    color: "#232c53",
+  },
+  formulaire: {
+    width: "80%",
+  },
+  input: {
+    height: 40,
+    borderColor: "gray",
+    borderWidth: 1,
+    marginBottom: 15,
+    paddingHorizontal: 10,
+  },
+});
