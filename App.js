@@ -2,8 +2,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import React, { useState, useEffect, useDebugValue } from "react";
 import { AppRegistry, TextInputBase, alert } from "react-native";
 import * as SQLite from "expo-sqlite";
-import NavigationDrawer from "./Components/NavigationDrawer"
-
+import NavigationDrawer from "./Components/NavigationDrawer";
 
 const db = SQLite.openDatabase("ma_base_de_donnees.db");
 
@@ -13,10 +12,10 @@ export default function App() {
     // insertData();
     fetchData();
     // DelData();
-     //createTables();
-     //insertData();
-     //fetchData();
-     //DelData();
+    //createTables();
+    //insertData();
+    //fetchData();
+    //DelData();
   }, []);
 
   const createTables = () => {
@@ -27,11 +26,9 @@ export default function App() {
         [],
         () => {
           console.log("User table created successfully");
-
         },
         (_, error) => {
           console.log("Error creating user table ", error);
-
         }
       );
 
@@ -40,11 +37,9 @@ export default function App() {
         [],
         () => {
           console.log("Evenement table created successfully");
-
         },
         (_, error) => {
           console.log("Error creating evenement table ", error);
-
         }
       );
 
@@ -62,20 +57,22 @@ export default function App() {
       const db = SQLite.openDatabase("ma_base_de_donnees.db");
 
       // Création de la table LocalData
-        tx.executeSql(
-          "CREATE TABLE IF NOT EXISTS LocalData (id INTEGER PRIMARY KEY AUTOINCREMENT, key TEXT UNIQUE, value TEXT)",
-          [],
-          () => {
-            console.log("Table LocalData créée avec succès");
-          },
-          (_, error) => {
-            console.error("Erreur lors de la création de la table LocalData", error);
-          }
-        );
-      });
-
+      tx.executeSql(
+        "CREATE TABLE IF NOT EXISTS LocalData (id INTEGER PRIMARY KEY AUTOINCREMENT, key TEXT UNIQUE, value TEXT)",
+        [],
+        () => {
+          console.log("Table LocalData créée avec succès");
+        },
+        (_, error) => {
+          console.error(
+            "Erreur lors de la création de la table LocalData",
+            error
+          );
+        }
+      );
+    });
   };
-  
+
   const insertData = () => {
     db.transaction((tx) => {
       tx.executeSql(
@@ -119,7 +116,7 @@ export default function App() {
           const rows = resultSet.rows;
           for (let i = 0; i < rows.length; i++) {
             const row = rows.item(i);
-            console.log("Résultat de la requête :", row);
+            // console.log("Résultat de la requête :", row);
           }
         },
         (_, error) => {
@@ -134,7 +131,7 @@ export default function App() {
           const rows = resultSet.rows;
           for (let i = 0; i < rows.length; i++) {
             const row = rows.item(i);
-            console.log("Résultat de la requête :", row);
+            // console.log("Résultat de la requête :", row);
           }
         },
         (_, error) => {
@@ -180,8 +177,7 @@ export default function App() {
       );
     });
   };
-  return (<NavigationDrawer />)
-
+  return <NavigationDrawer />;
 }
 
 AppRegistry.registerComponent("App", () => App);

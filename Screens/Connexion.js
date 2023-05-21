@@ -1,23 +1,19 @@
+import React, { useState } from "react";
 import {
   StyleSheet,
   View,
   TextInput,
-  Button,
-  SafeAreaView,
   TouchableOpacity,
   Text,
-  Alert,Image
+  Image,
 } from "react-native";
-import { FontAwesome5, Ionicons } from "@expo/vector-icons";
-import { useLayoutEffect } from "react";
-import React, { useState, useEffect, useContext } from "react";
 import { useNavigation } from "@react-navigation/native";
 import * as SQLite from "expo-sqlite";
 
-export default function Connexion() {
+const Connexion = () => {
   const navigation = useNavigation();
-  const [numLicence, SetnumLicence] = useState("");
-  const [Password, SetPassword] = useState("");
+  const [numLicence, setNumLicence] = useState("");
+  const [password, setPassword] = useState("");
 
   const db = SQLite.openDatabase("ma_base_de_donnees.db");
 
@@ -25,21 +21,17 @@ export default function Connexion() {
     return new Promise((resolve, reject) => {
       db.transaction((tx) => {
         tx.executeSql(
-          'SELECT * FROM User WHERE num_Licence = ? AND User_passwords = ?',
+          "SELECT * FROM User WHERE num_Licence = ? AND User_passwords = ?",
           [numLicence, password],
           (tx, results) => {
             if (results.rows.length > 0) {
-              // Utilisateur trouvé, connexion réussie
               const user = results.rows.item(0);
-              navigation.navigate("Home", {user});
-              resolve(true);
+              resolve(user);
             } else {
-              // Aucun utilisateur correspondant trouvé, connexion échouée
               resolve(false);
             }
           },
           (error) => {
-            // Erreur lors de l'exécution de la requête SQL
             reject(error);
           }
         );
@@ -47,42 +39,35 @@ export default function Connexion() {
     });
   };
 
-  const handleLogin = () => {
-    seConnecter(numLicence, Password)
-      .then((connexionReussie) => {
-        if (connexionReussie) {
-          console.log('Connexion réussie');
-          // Effectuez les actions nécessaires après une connexion réussie
-          navigation.navigate("Home");
-        } else {
-          console.log('Échec de la connexion');
-          // Effectuez les actions nécessaires après une connexion échouée
-          Alert.alert('Identifiants invalides');
-        }
-      })
-      .catch((error) => {
-        console.log('Erreur:', error);
-        // Gérez les erreurs
-        Alert.alert('Une erreur s\'est produite' + error );
-      });
+  const handleConnexion = async () => {
+    try {
+      const user = await seConnecter(numLicence, password);
+      if (user) {
+        navigation.navigate("Profil", { user });
+        navigation.navigate("Add", { user });
+        navigation.navigate("Presence", { user });
+        navigation.navigate("Contact", { user });
+        navigation.navigate("Home", { user });
+      } else {
+        // Aucun utilisateur correspondant trouvé, afficher un message d'erreur ou effectuer d'autres actions
+      }
+    } catch (error) {
+      // Erreur lors de l'exécution de la requête SQL, gérer l'erreur appropriée
+    }
   };
-  
 
   return (
     <View style={styles.background}>
-
-
-      
       <Image source={require("../Images/Logo.png")} style={styles.logo} />
-      <Text style = {styles.titre}> EasyOrga </Text>
-      <View style = {styles.container}>
+      <Text style={styles.titre}>EasyOrga</Text>
+      <View style={styles.container}>
         <Text style={styles.texte}>Numéro de licence</Text>
         <TextInput
           style={styles.textezone}
           keyboardType="numeric"
           placeholder="..."
           value={numLicence}
-          onChangeText={SetnumLicence}
+          onChangeText={setNumLicence}
         />
 
         <Text style={styles.texte}>Mot de passe</Text>
@@ -90,22 +75,20 @@ export default function Connexion() {
           style={styles.textezone}
           placeholder="..."
           secureTextEntry
-          value={Password}
-          onChangeText={SetPassword}
+          value={password}
+          onChangeText={setPassword}
         />
-        <TouchableOpacity style={styles.button} onPress={() => seConnecter(numLicence, Password)}>
+        <TouchableOpacity style={styles.button} onPress={handleConnexion}>
           <Text style={{ color: "white" }}>Se connecter</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Inscription")}
-        >
+        <TouchableOpacity onPress={() => navigation.navigate("Inscription")}>
           <Text style={{ color: "white" }}>S'inscrire</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   titre: {
@@ -121,12 +104,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   container: {
-    width: '80%'
+    width: "80%",
   },
   button: {
     backgroundColor: "#556297",
-    alignItems: 'center',
-    width: '100%',
+    alignItems: "center",
+    width: "100%",
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 5,
@@ -136,7 +119,7 @@ const styles = StyleSheet.create({
     color: "white",
   },
   textezone: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 5,
     width: "100%",
     paddingHorizontal: 20,
@@ -144,10 +127,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginVertical: 10,
   },
-  logo:{
-    alignSelf :"center",
+  logo: {
+    alignSelf: "center",
     width: 200,
     height: 200,
-  }, 
-  
+  },
 });
+
+export default Connexion;

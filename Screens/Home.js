@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, FlatList,ScrollView } from "react-native";
+import { StyleSheet, Text, View, FlatList, ScrollView } from "react-native";
 import React, { useState, useEffect, useDebugValue } from "react";
 import {
   Alert,
@@ -11,22 +11,18 @@ import {
 import * as SQLite from "expo-sqlite";
 import * as Permissions from "expo-permissions";
 import * as Calendar from "expo-calendar";
-import moment from 'moment';
+import moment from "moment";
 import { Dimensions } from "react-native";
 
-import 'moment/locale/fr';
+import "moment/locale/fr";
 
-
-moment.locale('fr');
-
+moment.locale("fr");
 
 const ITEM_WIDTH = 300;
 
-
 const screenWidth = Dimensions.get("window").width;
 
-
-export default function Home({ route}) {
+export default function Home({ route }) {
   const { user } = route.params;
   const [Data, setData] = useState([]);
   const [selectedImageIndex, setSelectedImageIndex] = useState(null); // Ajout de la variable selectedImageIndex
@@ -49,19 +45,13 @@ export default function Home({ route}) {
     require("../Images/galerie/13.jpg"),
     require("../Images/galerie/14.jpg"),
     require("../Images/galerie/15.jpg"),
-  
   ];
-  
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  
+
   const handleImagePress = (index) => {
     setCurrentImageIndex(index);
   };
-  
-
-
-
-
 
   useEffect(() => {
     fetchDataFromDatabase();
@@ -161,50 +151,48 @@ export default function Home({ route}) {
     }
   }
 
-
   const getImageSource = (typeEvenement) => {
-    let imagePath = '';
+    let imagePath = "";
     switch (typeEvenement) {
-      case 'athletisme':
+      case "athletisme":
         imagePath = require(`../Images/sport/athle.png`);
         break;
-      case 'Basket':
+      case "Basket":
         imagePath = require(`../Images/sport/Basket.png`);
         break;
-      case 'Badminton':
+      case "Badminton":
         imagePath = require(`../Images/sport/Badminton.png`);
         break;
-      case 'Football':
+      case "Football":
         imagePath = require(`../Images/sport/Foot.png`);
         break;
-      case 'Hike':
+      case "Hike":
         imagePath = require(`../Images/sport/Hike_Efrei.png`);
         break;
-      case 'Tennis':
+      case "Tennis":
         imagePath = require(`../Images/sport/Tennis.png`);
         break;
-      case 'Natation':
+      case "Natation":
         imagePath = require(`../Images/sport/Natation.png`);
         break;
-      case 'Rugby':
+      case "Rugby":
         imagePath = require(`../Images/sport/Rugby.png`);
         break;
-      case 'Volleyball':
+      case "Volleyball":
         imagePath = require(`../Images/sport/Volley.png`);
         break;
-      case 'Ping Pong':
+      case "Ping Pong":
         imagePath = require(`../Images/sport/Logo_tennis_de_table.png`);
         break;
-  
+
       // Ajoute d'autres cas pour les autres types d'événements avec leurs chemins d'image correspondants
       default:
-        <Text> Pas d'image </Text>
+        <Text> Pas d'image </Text>;
     }
     return imagePath;
   };
-  
-  const Separator = () => <View style={{ width: 12 }} />;
 
+  const Separator = () => <View style={{ width: 12 }} />;
 
   const renderImages = () => {
     const rows = [];
@@ -242,108 +230,141 @@ export default function Home({ route}) {
 
     return rows;
   };
-  
-
-
-
 
   const renderItem = ({ item }) => {
     // ...
-  
-    const formattedDate = moment(item.date_evenement).format('dddd D MMMM').replace(/^(.)(.*)$/, (_, firstChar, restOfString) =>
-    firstChar.toUpperCase() + restOfString.toLowerCase()).replace(/\b\w/g, (c) => c.toUpperCase());
-    return (  
 
-    <View style={styles.flatlist}>
+    const formattedDate = moment(item.date_evenement)
+      .format("dddd D MMMM")
+      .replace(
+        /^(.)(.*)$/,
+        (_, firstChar, restOfString) =>
+          firstChar.toUpperCase() + restOfString.toLowerCase()
+      )
+      .replace(/\b\w/g, (c) => c.toUpperCase());
+    return (
+      <View style={styles.flatlist}>
+        <View style={styles.date}>
+          <Text style={{ fontSize: 25, color: "white", padding: 4 }}>
+            {formattedDate}
+          </Text>
+        </View>
 
-      <View style={styles.date}>
-        <Text style = {{fontSize:25, color:'white', padding:4}}>{formattedDate}</Text>
-      </View>
-
-      <View style = {{flexDirection: 'row'}}>
-          <View style = {{width: '50%',  justifyContent: 'center', alignItems: 'center', marginTop : 15}}>
-            <Text style = {{fontSize: 16}}>Entrainement de {item.Type_Evenement}</Text>
+        <View style={{ flexDirection: "row" }}>
+          <View
+            style={{
+              width: "50%",
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: 15,
+            }}
+          >
+            <Text style={{ fontSize: 16 }}>
+              Entrainement de {item.Type_Evenement}
+            </Text>
           </View>
-          <View style = {{width: '50%',  justifyContent: 'center', alignItems:'center', marginTop : 15,marginBottom : 15}}>
-            <Image source={getImageSource(item.Type_Evenement)} 
-                style={{ width: 80, height: 80 }} />
+          <View
+            style={{
+              width: "50%",
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: 15,
+              marginBottom: 15,
+            }}
+          >
+            <Image
+              source={getImageSource(item.Type_Evenement)}
+              style={{ width: 80, height: 80 }}
+            />
           </View>
-      </View>
-
-
-      <View>
-        <Text style={styles.info}>Responsable: {item.entraineur}</Text>
-        <Text style={styles.info}>Lieu: {item.lieu_evenement}</Text>
-      </View>
-
-      <View style = {{flexDirection: 'row'}}>
-
-        <View style={styles.heure}>
-          <TouchableOpacity onPress={() => handleParticipateClick(item.ID_Evenement, user.num_Licence)} style={{ margin: 15 }}>
-            <Text style = {{fontSize: 13, color:'white'}}>Je participe</Text>
-          </TouchableOpacity>
         </View>
 
-        <View style={styles.heure}>
-          <Text style = {{fontSize:13, color:'white', margin:15}}>{item.heure_debut}h - {item.heure_fin}h</Text>
+        <View>
+          <Text style={styles.info}>Responsable: {item.entraineur}</Text>
+          <Text style={styles.info}>Lieu: {item.lieu_evenement}</Text>
         </View>
-        
-        <View style={styles.heure}>
-          <TouchableOpacity onPress={() => DelEvent(item.ID_Evenement)} style={{ margin: 15 }}>
-            <Text style = {{fontSize: 13, color:'white'}}> Supprimer </Text>
-          </TouchableOpacity>
+
+        <View style={{ flexDirection: "row" }}>
+          <View style={styles.heure}>
+            <TouchableOpacity
+              onPress={() =>
+                handleParticipateClick(item.ID_Evenement, user.num_Licence)
+              }
+              style={{ margin: 15 }}
+            >
+              <Text style={{ fontSize: 13, color: "white" }}>Je participe</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.heure}>
+            <Text style={{ fontSize: 13, color: "white", margin: 15 }}>
+              {item.heure_debut}h - {item.heure_fin}h
+            </Text>
+          </View>
+
+          <View style={styles.heure}>
+            <TouchableOpacity
+              onPress={() => DelEvent(item.ID_Evenement)}
+              style={{ margin: 15 }}
+            >
+              <Text style={{ fontSize: 13, color: "white" }}> Supprimer </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
-
-    </View>
-  )};
+    );
+  };
 
   return (
     <View style={{ flex: 1 }}>
-    <View style={styles.container}>
-      <ScrollView>
-        <Text style = {{fontSize:25, color:'white', marginBottom : 10}}> Les évènements à venir </Text>
-        <FlatList
-          data={Data}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.ID_Evenement.toString()}
-          ItemSeparatorComponent={Separator}
-          horizontal
-          style={{ alignSelf: "center" }}
-          contentContainerStyle={{ paddingHorizontal: 10 }}
-        />
+      <View style={styles.container}>
+        <ScrollView>
+          <Text style={{ fontSize: 25, color: "white", marginBottom: 10 }}>
+            {" "}
+            Les évènements à venir{" "}
+          </Text>
+          <FlatList
+            data={Data}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.ID_Evenement.toString()}
+            ItemSeparatorComponent={Separator}
+            horizontal
+            style={{ alignSelf: "center" }}
+            contentContainerStyle={{ paddingHorizontal: 10 }}
+          />
 
-        <View style={{ marginTop: 10 }}>
-          <Text style = {{fontSize:25, color:'white', margin: 10 }}>Galerie de photos</Text>
-          <ScrollView>{renderImages()}</ScrollView>
-        </View>
-        <Image source={require("../Images/Footer.png")} style={styles.logo}/>
-      </ScrollView>
+          <View style={{ marginTop: 10 }}>
+            <Text style={{ fontSize: 25, color: "white", margin: 10 }}>
+              Galerie de photos
+            </Text>
+            <ScrollView>{renderImages()}</ScrollView>
+          </View>
+          <Image source={require("../Images/Footer.png")} style={styles.logo} />
+        </ScrollView>
+      </View>
     </View>
-    </View>
-
   );
 }
 
 const styles = StyleSheet.create({
-  date : {
-    backgroundColor: '#556297',
-    alignItems: 'center',
+  date: {
+    backgroundColor: "#556297",
+    alignItems: "center",
   },
-  
+
   heure: {
-    backgroundColor: '#556297',
-    alignItems: 'center',
+    backgroundColor: "#556297",
+    alignItems: "center",
     width: 100,
   },
-  info :{
-    marginBottom : 10,
+  info: {
+    marginBottom: 10,
   },
   flatlist: {
     width: ITEM_WIDTH,
 
     borderWidth: 1,
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
 
   container: {
@@ -378,12 +399,11 @@ const styles = StyleSheet.create({
   contenu: {
     margin: 10,
   },
-  
-  logo: {
 
+  logo: {
     alignSelf: "center",
     resizeMode: "contain",
     width: screenWidth,
-    height : 75, 
+    height: 75,
   },
 });
