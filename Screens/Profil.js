@@ -15,6 +15,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useRoute } from "@react-navigation/native";
 import * as SQLite from "expo-sqlite";
 const ITEM_WIDTH = 150;
+import { useNavigation } from "@react-navigation/native";
 export default function Profil({ route }) {
   // const db = SQLite.openDatabase({name: 'mydb.db', location: 'default'});
   const { user } = route.params;
@@ -152,7 +153,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    marginBottom: 5,
+    marginBottom: 3,
     color: "#232c53",
   },
   formulaire: {
@@ -162,7 +163,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderColor: "gray",
     borderWidth: 1,
-    marginBottom: 15,
+    marginBottom: 7,
     paddingHorizontal: 10,
   },
 });

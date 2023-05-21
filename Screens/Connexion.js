@@ -44,7 +44,7 @@ const Connexion = () => {
       const user = await seConnecter(numLicence, password);
       if (user) {
         navigation.navigate("Profil", { user });
-        navigation.navigate("Add", { user });
+        navigation.navigate("Ajouter un evenement", { user });
         navigation.navigate("Presence", { user });
         navigation.navigate("Contact", { user });
         navigation.navigate("Home", { user });

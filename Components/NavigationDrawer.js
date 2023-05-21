@@ -8,7 +8,6 @@ import Profil from "../Screens/Profil";
 import AboutUs from "../Screens/AboutUs";
 import ContactUs from "../Screens/ContactUs";
 import CalendarScreen from "../Screens/Calendar";
-import Exit from "../Screens/Exit";
 import AddEvent from "../Screens/AddEvent";
 import Connexion from "../Screens/Connexion";
 import Inscription from "../Screens/Inscription";
@@ -95,46 +94,11 @@ const NavigationDrawer = () => {
           }}
         />
         <Drawer.Screen
-          name="Exit"
-          component={Exit}
-          options={{
-            drawerIcon: ({ tintColor }) => (
-              <Feather name="log-out" size={16} color={"white"} />
-            ),
-            headerStyle: {
-              backgroundColor: "#232c53", // Set the header background color to white
-            },
-          }}
-        />
-        <Drawer.Screen
-          name="Add"
+          name="Ajouter un evenement"
           component={AddEvent}
           options={{
             drawerIcon: ({ tintColor }) => (
               <Feather name="plus" size={16} color={"white"} />
-            ),
-            headerStyle: {
-              backgroundColor: "#232c53", // Set the header background color to white
-            },
-          }}
-        />
-        <Drawer.Screen
-          name="Connexion"
-          component={Connexion}
-          options={{
-            drawerIcon: ({ tintColor }) => (
-              <Feather name="minus" size={16} color={"white"} />
-            ),
-            headerShown: false, // Enleve l'affichage du drawer
-            swipeEnabled: false, // Empeche de swipe pour afficher le drawer
-          }}
-        />
-        <Drawer.Screen
-          name="Presence"
-          component={PresenceComponent}
-          options={{
-            drawerIcon: ({ tintColor }) => (
-              <Feather name="minus" size={16} color={"white"} />
             ),
             headerStyle: {
               backgroundColor: "#232c53", // Set the header background color to white
@@ -153,6 +117,16 @@ const NavigationDrawer = () => {
             },
           }}
         />
+        
+        <Drawer.Screen
+          name="Connexion"
+          component={Connexion}
+          options={{
+            drawerLabel: () => null,
+            headerShown: false, // Enleve l'affichage du drawer
+            swipeEnabled: false, // Empeche de swipe pour afficher le drawer
+          }}
+        />       
         <Drawer.Screen
           name="Inscription"
           component={Inscription}
@@ -163,6 +137,13 @@ const NavigationDrawer = () => {
           //   headerShown: false, // Enleve l'affichage du drawer
           //   swipeEnabled: false, // Empeche de swipe pour afficher le drawer
           // }}
+          options={{
+            drawerLabel: () => null,
+          }}
+        />
+        <Drawer.Screen
+          name="Presence"
+          component={PresenceComponent}
           options={{
             drawerLabel: () => null,
           }}
