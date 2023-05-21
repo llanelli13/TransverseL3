@@ -3,14 +3,15 @@ import {
   Text,
   TextInput,
   View,
-  TouchableOpacity,Image
+  TouchableOpacity,
+  Image,
 } from "react-native";
 import { useState } from "react";
 import * as SQLite from "expo-sqlite";
 import { StatusBar } from "expo-status-bar";
-// import AdminCheck from "../Components/AdminCheck";
+import AdminCheck from "../Components/AdminCheck";
 
-export default function AddEvent() {
+export default function AddEvent({ route }) {
   const [Nom, Setnom] = useState("");
   const [Lieu, SetLieu] = useState("");
   const [Trainer, setTrainer] = useState("");
@@ -19,6 +20,7 @@ export default function AddEvent() {
   const [Annee, SetAnnee] = useState("");
   const [Heure_Debut, SetHeure_Debut] = useState("");
   const [Heure_Fin, SetHeure_Fin] = useState("");
+  const user = route.params;
 
   const fetchData = () => {
     const db = SQLite.openDatabase("ma_base_de_donnees.db");
@@ -97,59 +99,65 @@ export default function AddEvent() {
   };
 
   return (
-    <View style = {styles.background}>
+    <View style={styles.background}>
+      <AdminCheck user={user} />
 
-      <Text style = {{fontSize: 25, color: 'white', padding: 30}}> Nouvel évènement </Text>
+      <Text style={{ fontSize: 25, color: "white", padding: 30 }}>
+        {" "}
+        Nouvel évènement{" "}
+      </Text>
 
-      <View style = {{width: '75%'}}>
-      <TextInput 
-        style = {styles.textezone} 
-        placeholder="Sport :" 
-        value={Nom} 
-        onChangeText={Setnom} />
-
-      <TextInput 
-        style = {styles.textezone} 
-        placeholder="Lieu :" 
-        value={Lieu} 
-        onChangeText={SetLieu} />
-
-      <TextInput
-        style = {styles.textezone} 
-        placeholder="Entraineur :"
-        value={Trainer}
-        onChangeText={setTrainer}
-      />
-
-      <View style = {{flexDirection: 'row', justifyContent: 'space-between'}}>
+      <View style={{ width: "75%" }}>
         <TextInput
-          style = {styles.textezone2} 
-          keyboardType="numeric"
-          placeholder="Jour :"
-          value={Jour}
-          onChangeText={SetJour}
+          style={styles.textezone}
+          placeholder="Sport :"
+          value={Nom}
+          onChangeText={Setnom}
         />
 
         <TextInput
-          style = {styles.textezone2} 
-          keyboardType="numeric"
-          placeholder="Mois :"
-          value={Mois}
-          onChangeText={SetMois}
+          style={styles.textezone}
+          placeholder="Lieu :"
+          value={Lieu}
+          onChangeText={SetLieu}
         />
 
         <TextInput
-          style = {styles.textezone2} 
-          keyboardType="numeric"
-          placeholder="Année :"
-          value={Annee}
-          onChangeText={SetAnnee}
+          style={styles.textezone}
+          placeholder="Entraineur :"
+          value={Trainer}
+          onChangeText={setTrainer}
         />
-      </View>
 
-        <View style = {{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <TextInput
-            style = {styles.textezone2} 
+            style={styles.textezone2}
+            keyboardType="numeric"
+            placeholder="Jour :"
+            value={Jour}
+            onChangeText={SetJour}
+          />
+
+          <TextInput
+            style={styles.textezone2}
+            keyboardType="numeric"
+            placeholder="Mois :"
+            value={Mois}
+            onChangeText={SetMois}
+          />
+
+          <TextInput
+            style={styles.textezone2}
+            keyboardType="numeric"
+            placeholder="Année :"
+            value={Annee}
+            onChangeText={SetAnnee}
+          />
+        </View>
+
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <TextInput
+            style={styles.textezone2}
             keyboardType="numeric"
             placeholder="Début :"
             value={Heure_Debut}
@@ -157,7 +165,7 @@ export default function AddEvent() {
           />
 
           <TextInput
-            style =  {styles.textezone2}
+            style={styles.textezone2}
             keyboardType="numeric"
             placeholder="Fin :"
             value={Heure_Fin}
@@ -165,8 +173,6 @@ export default function AddEvent() {
           />
         </View>
       </View>
-      
- 
 
       <TouchableOpacity onPress={addEvent} style={styles.button}>
         <Text> Add Event </Text>
@@ -179,7 +185,7 @@ export default function AddEvent() {
 
 const styles = StyleSheet.create({
   textezone: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 5,
     width: "100%",
     paddingHorizontal: 20,
@@ -188,7 +194,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   textezone2: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 5,
     width: "30%",
     paddingHorizontal: 20,
@@ -198,7 +204,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     alignSelf: "center",
-    resizeMode: 'contain',
+    resizeMode: "contain",
     flex: 0.2,
   },
   background: {
@@ -209,8 +215,8 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: "#556297",
-    alignItems: 'center',
-    width: '75%',
+    alignItems: "center",
+    width: "75%",
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 5,

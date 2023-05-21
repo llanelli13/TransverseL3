@@ -1,17 +1,17 @@
-import React from "react";
-import { View, Text } from "react-native";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
+import { View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-const AdminCheck = () => {
+const AdminCheck = ({ user }) => {
   const navigation = useNavigation();
+
   useEffect(() => {
-    const isAdmin = localStorage.getItem("user_role") === "admin";
+    const isAdmin = user.User_role === "admin";
     if (!isAdmin) {
       // Rediriger vers la page de non autorisation si l'utilisateur n'est pas un admin
       navigation.navigate("NonAdmin");
     }
-  }, []);
+  }, [user, navigation]);
 
   return <View>{/* Contenu du composant AdminCheck */}</View>;
 };

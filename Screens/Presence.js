@@ -1,22 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, FlatList } from 'react-native';
-import * as SQLite from 'expo-sqlite';
-import { CheckBox } from 'react-native-elements';
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View, Text, FlatList } from "react-native";
+import * as SQLite from "expo-sqlite";
+import { CheckBox } from "react-native-elements";
+import AdminCheck from "../Components/AdminCheck";
 
-export default function PresenceComponent({ route }) { // route est la prop utilisée pour passer les paramètres à ce composant
+export default function PresenceComponent({ route }) {
+  // route est la prop utilisée pour passer les paramètres à ce composant
 
   const { item } = route.params;
 
-
-
   const [Data, setData] = useState([]);
   const [checked, setChecked] = useState([]);
-
+  const user = route.params;
 
   useEffect(() => {
     fetchDataFromDatabase(item);
   }, []);
-
 
   const handleCheck = (numLicence) => {
     setChecked((prevState) => {
@@ -31,14 +30,13 @@ export default function PresenceComponent({ route }) { // route est la prop util
     });
   };
 
-
   const fetchDataFromDatabase = (item) => {
-    const db = SQLite.openDatabase('ma_base_de_donnees.db');
+    const db = SQLite.openDatabase("ma_base_de_donnees.db");
 
-    db.transaction(tx => {
-      console.log(item)
+    db.transaction((tx) => {
+      console.log(item);
       tx.executeSql(
-        'SELECT Participe.*, User.* FROM Participe INNER JOIN Evenement ON Participe.ID_Evenement = Evenement.ID_Evenement INNER JOIN User on Participe.num_Licence = User.num_Licence  WHERE Participe.ID_Evenement = ?',
+        "SELECT Participe.*, User.* FROM Participe INNER JOIN Evenement ON Participe.ID_Evenement = Evenement.ID_Evenement INNER JOIN User on Participe.num_Licence = User.num_Licence  WHERE Participe.ID_Evenement = ?",
         [item.ID_Evenement],
         (_, resultSet) => {
           console.log(resultSet);
@@ -47,38 +45,37 @@ export default function PresenceComponent({ route }) { // route est la prop util
           for (let i = 0; i < rows.length; i++) {
             const row = rows.item(i);
             newData.push(row); // Ajouter chaque ligne à l'array newData
-            
           }
           setData(newData); // Mettre à jour le state Data avec les données récupérées
         },
         (_, error) => {
-          console.log('Erreur lors de la requête :', error);
+          console.log("Erreur lors de la requête :", error);
         }
       );
     });
-
   };
-  
+
   const Separator = () => <View style={{ width: 12 }} />;
 
   const renderItem = ({ item }) => (
     <View style={styles.item} key={item.num_Licence.toString()}>
-      <Text style = {{color:'white'}}>{item.num_Licence}</Text>
-      <Text style = {{color:'white'}}>{item.User_nom}</Text>
-      <Text style = {{color:'white'}}>{item.User_prenom}</Text>
+      <Text style={{ color: "white" }}>{item.num_Licence}</Text>
+      <Text style={{ color: "white" }}>{item.User_nom}</Text>
+      <Text style={{ color: "white" }}>{item.User_prenom}</Text>
       <CheckBox
         checked={checked.includes(item.num_Licence)}
         onPress={() => handleCheck(item.num_Licence)}
       />
     </View>
   );
-  
-  
 
   return (
-    <View style = {styles.background}>
+    <View style={styles.background}>
+      <AdminCheck user={user} />
 
-      <Text style = {{color:'white', textAlign:'center', fontSize: 25}}>{item.Nom_evenement}</Text>
+      <Text style={{ color: "white", textAlign: "center", fontSize: 25 }}>
+        {item.Nom_evenement}
+      </Text>
       <FlatList
         data={Data}
         renderItem={renderItem}
@@ -91,21 +88,21 @@ export default function PresenceComponent({ route }) { // route est la prop util
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-evenly",
   },
   label: {
     fontSize: 18,
     marginBottom: 20,
   },
   checkbox: {
-    alignSelf: 'center',
+    alignSelf: "center",
   },
   item: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-evenly",
     marginBottom: 10,
   },
   itemText: {
@@ -114,11 +111,11 @@ const styles = StyleSheet.create({
   },
   logo: {
     alignSelf: "center",
-    resizeMode: 'contain',
+    resizeMode: "contain",
     flex: 0.2,
-  },  
-  background : {
+  },
+  background: {
     flex: 1,
-    backgroundColor: '#556297',
+    backgroundColor: "#556297",
   },
 });

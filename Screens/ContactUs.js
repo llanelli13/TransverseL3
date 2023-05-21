@@ -1,24 +1,39 @@
-import React from "react";
-import { View, Text,StyleSheet } from "react-native";
-import AdminCheck from "../Components/AdminCheck";
+import React, { useState } from "react";
+import { StyleSheet, View, TextInput, Button, Text } from "react-native";
 
-const ContactUs = () => {
+export default function ContactUs({ route }) {
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const { user } = route.params;
+
+  const handleSendMessage = () => {
+    if (subject !== "" && message !== "") {
+      // Logique pour envoyer le message
+      // Peut être implémentée ici ou appelée à partir d'une fonction séparée
+
+      // Exemple de log pour afficher les valeurs saisies
+      console.log("Objet :", subject);
+      console.log("Message :", message);
+
+      setShowErrorMessage(false); // Réinitialiser le message d'erreur
+      setShowSuccessMessage(true); // Afficher le message de succès
+
+      // Réinitialiser les champs après l'envoi du message
+      setSubject("");
+      setMessage("");
+    } else {
+      setShowErrorMessage(true);
+    }
+  };
+
   return (
-    <View style = {styles.background}>
-      <View style = {styles.container}>
-        <Text>L'équipe BDS</Text>
-        <Image source={require("../Images/Logo.png")} style={styles.logo} />
-        <Text>L'équipe BDS</Text>
-        <Text>L'équipe BDS</Text>
-        <Text>L'équipe BDS</Text>
-        <Text>L'équipe BDS</Text>
-        <Image source={require("../Images/Logo.png")} style={styles.logo} />
-        <Image source={require("../Images/Logo.png")} style={styles.logo} />
-        <Image source={require("../Images/Logo.png")} style={styles.logo} />
-      </View>
+    <View>
+      <Text>Olala contactez nous ....</Text>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   background: {
@@ -28,12 +43,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   container: {
-    width: '80%'
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "flex-start",
   },
-  logo:{
-    alignSelf :"center",
-  }, 
+  logo: {
+    alignSelf: "center",
+    resizeMode: 'contain',
+    flex: 0.2,
+  },
 });
-
-
-export default ContactUs;
