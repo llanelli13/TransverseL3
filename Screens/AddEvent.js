@@ -20,7 +20,9 @@ export default function AddEvent({ route }) {
   const [Annee, SetAnnee] = useState("");
   const [Heure_Debut, SetHeure_Debut] = useState("");
   const [Heure_Fin, SetHeure_Fin] = useState("");
-  const user = route.params;
+  console.log(route.params);
+  const { user } = route.params;
+  console.log(user.User_role);
 
   const fetchData = () => {
     const db = SQLite.openDatabase("ma_base_de_donnees.db");
@@ -100,7 +102,7 @@ export default function AddEvent({ route }) {
 
   return (
     <View style={styles.background}>
-      {/* <AdminCheck user={user} /> */}
+      <AdminCheck user={user} />
 
       <Text style={{ fontSize: 25, color: "white", padding: 30 }}>
         {" "}
