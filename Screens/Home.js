@@ -262,7 +262,7 @@ export default function Home({ route}) {
 
       <View style = {{flexDirection: 'row'}}>
           <View style = {{width: '50%',  justifyContent: 'center', alignItems: 'center', marginTop : 15}}>
-            <Text style = {{fontSize: 16}}>{item.Type_Evenement}</Text>
+            <Text style = {{fontSize: 16}}>Entrainement de {item.Type_Evenement}</Text>
           </View>
           <View style = {{width: '50%',  justifyContent: 'center', alignItems:'center', marginTop : 15,marginBottom : 15}}>
             <Image source={getImageSource(item.Type_Evenement)} 
@@ -275,20 +275,26 @@ export default function Home({ route}) {
         <Text style={styles.info}>Responsable: {item.entraineur}</Text>
         <Text style={styles.info}>Lieu: {item.lieu_evenement}</Text>
       </View>
-      <View style={styles.heure}>
-        <Text style = {{fontSize:25, color:'white'}}  >{item.heure_debut}h - {item.heure_fin}h</Text>
+
+      <View style = {{flexDirection: 'row'}}>
+
+        <View style={styles.heure}>
+          <TouchableOpacity onPress={() => handleParticipateClick(item.ID_Evenement, user.num_Licence)} style={{ margin: 15 }}>
+            <Text style = {{fontSize: 13, color:'white'}}>Je participe</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.heure}>
+          <Text style = {{fontSize:13, color:'white', margin:15}}>{item.heure_debut}h - {item.heure_fin}h</Text>
+        </View>
+        
+        <View style={styles.heure}>
+          <TouchableOpacity onPress={() => DelEvent(item.ID_Evenement)} style={{ margin: 15 }}>
+            <Text style = {{fontSize: 13, color:'white'}}> Supprimer </Text>
+          </TouchableOpacity>
+        </View>
       </View>
-      
-      <View style={styles.heure}>
-        <TouchableOpacity onPress={() => handleParticipateClick(item.ID_Evenement, user.num_Licence)} style={{ margin: 15 }}>
-          <Text>Je participe</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.heure}>
-        <TouchableOpacity onPress={() => DelEvent(item.ID_Evenement)} style={{ margin: 10 }}>
-          <Text> Delete Event </Text>
-        </TouchableOpacity>
-      </View>
+
     </View>
   )};
 
@@ -296,10 +302,7 @@ export default function Home({ route}) {
     <View style={{ flex: 1 }}>
     <View style={styles.container}>
       <ScrollView>
-
-        <Text>Welcome home, {user.User_prenom}! </Text>
-
-        <Text style = {{fontSize:25, color:'white', marginBottom : 20}}> Les évènements à venir </Text>
+        <Text style = {{fontSize:25, color:'white', marginBottom : 10}}> Les évènements à venir </Text>
         <FlatList
           data={Data}
           renderItem={renderItem}
@@ -311,7 +314,7 @@ export default function Home({ route}) {
         />
 
         <View style={{ marginTop: 10 }}>
-          <Text style = {{fontSize:25, color:'white', marginBottom: 10 }}>Galerie de photos</Text>
+          <Text style = {{fontSize:25, color:'white', margin: 10 }}>Galerie de photos</Text>
           <ScrollView>{renderImages()}</ScrollView>
         </View>
         <Image source={require("../Images/Footer.png")} style={styles.logo}/>
@@ -331,9 +334,7 @@ const styles = StyleSheet.create({
   heure: {
     backgroundColor: '#556297',
     alignItems: 'center',
-    paddingVertical: 10,
-    borderRadius: 5,
-    marginHorizontal: 60,
+    width: 100,
   },
   info :{
     marginBottom : 10,
