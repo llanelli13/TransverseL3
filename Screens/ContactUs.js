@@ -1,8 +1,7 @@
-
-import React from "react";
-import AdminCheck from "../Components/AdminCheck";
-import { useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet, View, TextInput, Button, Text } from "react-native";
+import { Dimensions } from "react-native";
+import { Image } from "react-native-elements";
 
 export default function ContactUs({ route }) {
   const [subject, setSubject] = useState("");
@@ -61,15 +60,13 @@ export default function ContactUs({ route }) {
         <Text style={styles.successMessage}>Message envoyé avec succès!</Text>
       )}
       <Button title="Envoyer" onPress={handleSendMessage} color="#232c53" />
+      <Image source={require("../Images/Footer.png")} style={styles.logo} />
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "flex-start",
     flex: 1,
     backgroundColor: "#FFF",
     padding: 20,
@@ -78,11 +75,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 20,
-  },
-  logo: {
-    alignSelf: "center",
-    resizeMode: 'contain',
-    flex: 0.2,
   },
   input: {
     marginBottom: 10,
@@ -112,5 +104,8 @@ const styles = StyleSheet.create({
   successMessage: {
     color: "green",
     marginTop: 10,
+  },
+  logo: {
+    width: 100,
   },
 });

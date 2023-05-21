@@ -1,5 +1,6 @@
 import React from "react";
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
+import { Image } from "react-native-elements";
 
 export default function AboutUs() {
   return (
@@ -9,10 +10,10 @@ export default function AboutUs() {
           Voici notre projet d'organisation pour association comme le BDS.
         </Text>
         <Text style={styles.texte}>
-          Notre équipe a entièrement designé et codé cette application dans le but
-          d'aider les associations à créer, modifier, générer et organiser leurs
-          événements, gérer les présences, et faciliter la communication entre les
-          membres.
+          Notre équipe a entièrement designé et codé cette application dans le
+          but d'aider les associations à créer, modifier, générer et organiser
+          leurs événements, gérer les présences, et faciliter la communication
+          entre les membres.
         </Text>
         <Image source={require("../Images/Bureau.jpg")} style={styles.image} />
         <Image source={require("../Images/Footer.png")} style={styles.logo} />
@@ -22,7 +23,7 @@ export default function AboutUs() {
 }
 
 const styles = StyleSheet.create({
-  background :{
+  background: {
     flex: 1,
     backgroundColor: "#232c53",
     alignItems: "center",
@@ -31,25 +32,22 @@ const styles = StyleSheet.create({
   },
 
   container: {
-    width :"80%",
+    width: "80%",
   },
   texte: {
     fontWeight: "bold",
     fontSize: 24,
     marginBottom: 20,
-
+    color: "white",
   },
   logo: {
     alignSelf: "center",
-    resizeMode: "contain",
     width: "100%",
     marginTop: 20,
   },
   image: {
     alignSelf: "center",
-    resizeMode: "contain",
     width: "100%",
     marginTop: 20,
   },
-
 });

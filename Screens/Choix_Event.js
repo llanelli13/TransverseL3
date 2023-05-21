@@ -43,7 +43,7 @@ export default function ChoixEvent () {
 
       const goToNextScreen = (item) => {
         navigation.dispatch(DrawerActions.jumpTo('Presence', {item}));
-      }
+      };
 
       const navigateToEventDetails = (item) => {
         navigation.navigate('Presence', { item });
@@ -53,7 +53,7 @@ export default function ChoixEvent () {
         return (
             <View>
                 <TouchableOpacity 
-                    onPress={() => goToNextScreen(item)}>
+                    onPress={() => navigateToEventDetails(item)}>
                           <Text style = {{fontSize: 20, padding: 5, color:'white'}}> {item.Nom_evenement} </Text>
                 </TouchableOpacity>
 
