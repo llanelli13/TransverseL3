@@ -122,6 +122,7 @@ const NavigationDrawer = () => {
           name="Connexion"
           component={Connexion}
           options={{
+            drawerItemStyle: { pointerEvents: 'none' },
             drawerLabel: () => null,
             headerShown: false, // Enleve l'affichage du drawer
             swipeEnabled: false, // Empeche de swipe pour afficher le drawer
@@ -138,6 +139,7 @@ const NavigationDrawer = () => {
           //   swipeEnabled: false, // Empeche de swipe pour afficher le drawer
           // }}
           options={{
+            drawerItemStyle: { pointerEvents: 'none' },
             drawerLabel: () => null,
           }}
         />
@@ -145,6 +147,7 @@ const NavigationDrawer = () => {
           name="Presence"
           component={PresenceComponent}
           options={{
+            drawerItemStyle: { pointerEvents: 'none' },
             drawerLabel: () => null,
           }}
         />
@@ -153,6 +156,7 @@ const NavigationDrawer = () => {
           component={NonAdmin}
           options={{
             drawerLabel: () => null,
+            drawerItemStyle: { pointerEvents: 'none' },
           }}
         />
       </Drawer.Navigator>

@@ -91,7 +91,7 @@ export default function AddEvent({ route }) {
         ],
         (_, resultSet) => {
           console.log("Add Event réussi");
-          fetchData();
+          // fetchData();
         },
         (_, error) => {
           console.log("Erreur lors de add Event Evenement:", error);
