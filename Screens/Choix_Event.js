@@ -54,7 +54,7 @@ export default function ChoixEvent () {
             <View>
                 <TouchableOpacity 
                     onPress={() => goToNextScreen(item)}>
-                    <Text>Evenement : {item.Nom_evenement}</Text>
+                          <Text style = {{fontSize: 20, padding: 5, color:'white'}}> {item.Nom_evenement} </Text>
                 </TouchableOpacity>
 
             </View>
@@ -76,14 +76,19 @@ export default function ChoixEvent () {
         resizeMode: 'contain',
         flex: 0.2,
       },
+      background : {
+        flex: 1,
+        backgroundColor: '#556297',
+        alignItems: 'center',
+      },
     });
     
 
 
     return (
-        <View>
+        <View style= {styles.background}>
 
-            <Text> Voici la liste des évènements : </Text>
+            <Text style = {{fontSize: 20,  padding: 20, color:'white'}}> Voici la liste des évènements : </Text>
             <FlatList
                 data={Data}
                 renderItem={renderItem}

@@ -63,9 +63,9 @@ export default function PresenceComponent({ route }) { // route est la prop util
 
   const renderItem = ({ item }) => (
     <View style={styles.item} key={item.num_Licence.toString()}>
-      <Text>{item.num_Licence}</Text>
-      <Text>{item.User_nom}</Text>
-      <Text>{item.User_prenom}</Text>
+      <Text style = {{color:'white'}}>{item.num_Licence}</Text>
+      <Text style = {{color:'white'}}>{item.User_nom}</Text>
+      <Text style = {{color:'white'}}>{item.User_prenom}</Text>
       <CheckBox
         checked={checked.includes(item.num_Licence)}
         onPress={() => handleCheck(item.num_Licence)}
@@ -76,9 +76,9 @@ export default function PresenceComponent({ route }) { // route est la prop util
   
 
   return (
-    <View>
+    <View style = {styles.background}>
 
-      <Text> Evenement choisi : {item.Nom_evenement}</Text>
+      <Text style = {{color:'white', textAlign:'center', fontSize: 25}}>{item.Nom_evenement}</Text>
       <FlatList
         data={Data}
         renderItem={renderItem}
@@ -112,9 +112,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     flex: 1,
   },
-    logo: {
-      alignSelf: "center",
-      resizeMode: 'contain',
-      flex: 0.2,
-    },  
+  logo: {
+    alignSelf: "center",
+    resizeMode: 'contain',
+    flex: 0.2,
+  },  
+  background : {
+    flex: 1,
+    backgroundColor: '#556297',
+  },
 });
