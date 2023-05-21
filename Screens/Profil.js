@@ -72,18 +72,6 @@ export default function Profil({ route }) {
   return (
     <View style={styles.container}>
       <Text style={styles.titre}>Profil de l'utilisateur</Text>
-      <View style={styles.informations}>
-        <Text style={styles.label}>Numéro de licence:</Text>
-        <Text>{user.num_Licence}</Text>
-        <Text style={styles.label}>Prénom:</Text>
-        <Text>{user.User_prenom}</Text>
-        <Text style={styles.label}>Nom:</Text>
-        <Text>{user.User_nom}</Text>
-        <Text style={styles.label}>Adresse e-mail:</Text>
-        <Text>{user.User_mail}</Text>
-        <Text style={styles.label}>Mot de passe:</Text>
-        <Text>********</Text>
-      </View>
       <View style={styles.formulaire}>
         <Text style={styles.label}>Nouveau prénom:</Text>
         <TextInput

@@ -100,7 +100,7 @@ export default function AddEvent({ route }) {
 
   return (
     <View style={styles.background}>
-      <AdminCheck user={user} />
+      {/* <AdminCheck user={user} /> */}
 
       <Text style={{ fontSize: 25, color: "white", padding: 30 }}>
         {" "}
