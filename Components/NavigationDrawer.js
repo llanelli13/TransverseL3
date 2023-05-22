@@ -14,6 +14,7 @@ import Inscription from "../Screens/Inscription";
 import PresenceComponent from "../Screens/Presence";
 import ChoixEvent from "../Screens/Choix_Event";
 import NonAdmin from "../Screens/NonAdmin";
+import ModifScreen from "../Screens/ModifScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -141,6 +142,7 @@ const NavigationDrawer = () => {
           options={{
             drawerItemStyle: { pointerEvents: 'none' },
             drawerLabel: () => null,
+            headerShown: false,
           }}
         />
         <Drawer.Screen
@@ -154,6 +156,14 @@ const NavigationDrawer = () => {
         <Drawer.Screen
           name="NonAdmin"
           component={NonAdmin}
+          options={{
+            drawerLabel: () => null,
+            drawerItemStyle: { pointerEvents: 'none' },
+          }}
+        />
+        <Drawer.Screen
+          name="ModifEvenet"
+          component={ModifScreen}
           options={{
             drawerLabel: () => null,
             drawerItemStyle: { pointerEvents: 'none' },

@@ -71,7 +71,7 @@ export default function PresenceComponent({ route }) {
 
   return (
     <View style={styles.background}>
-      {/* <AdminCheck user={user} /> */}
+      <AdminCheck user={user} />
 
       <Text style={{ color: "white", textAlign: "center", fontSize: 25 }}>
         {item.Nom_evenement}
