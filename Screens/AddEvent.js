@@ -10,6 +10,10 @@ import { useState } from "react";
 import * as SQLite from "expo-sqlite";
 import { StatusBar } from "expo-status-bar";
 import AdminCheck from "../Components/AdminCheck";
+import { Dimensions } from "react-native";
+const screenWidth = Dimensions.get("window").width;
+
+
 
 export default function AddEvent({ route }) {
   const [Nom, Setnom] = useState("");
@@ -207,7 +211,12 @@ const styles = StyleSheet.create({
   logo: {
     alignSelf: "center",
     resizeMode: "contain",
-    flex: 0.2,
+    width: screenWidth,
+    height: 75,
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
   background: {
     flex: 1,

@@ -15,8 +15,6 @@ export default function AboutUs() {
           leurs événements, gérer les présences, et faciliter la communication
           entre les membres.
         </Text>
-        <Image source={require("../Images/Bureau.jpg")} style={styles.image} />
-        <Image source={require("../Images/Footer.png")} style={styles.logo} />
       </View>
     </View>
   );
@@ -36,18 +34,10 @@ const styles = StyleSheet.create({
   },
   texte: {
     fontWeight: "bold",
+    textAlign : "center",
     fontSize: 24,
     marginBottom: 20,
     color: "white",
   },
-  logo: {
-    alignSelf: "center",
-    width: "100%",
-    marginTop: 20,
-  },
-  image: {
-    alignSelf: "center",
-    width: "100%",
-    marginTop: 20,
-  },
+  
 });

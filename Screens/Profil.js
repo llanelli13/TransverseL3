@@ -16,6 +16,10 @@ import { useRoute } from "@react-navigation/native";
 import * as SQLite from "expo-sqlite";
 const ITEM_WIDTH = 150;
 import { useNavigation } from "@react-navigation/native";
+import { Dimensions } from "react-native";
+const screenWidth = Dimensions.get("window").width;
+
+
 export default function Profil({ route }) {
   // const db = SQLite.openDatabase({name: 'mydb.db', location: 'default'});
   const { user } = route.params;
@@ -112,6 +116,7 @@ export default function Profil({ route }) {
           color="#232c53"
         />
       </View>
+      <Image source={require("../Images/Footer.png")} style={styles.logo} />
     </View>
   );
 }
@@ -154,4 +159,16 @@ const styles = StyleSheet.create({
     marginBottom: 7,
     paddingHorizontal: 10,
   },
+  logo: {
+    alignSelf: "center",
+    resizeMode: "contain",
+    width: screenWidth,
+    height: 75,
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
+
+  
 });

@@ -149,6 +149,9 @@ const NavigationDrawer = () => {
           name="Presence"
           component={PresenceComponent}
           options={{
+            headerStyle: {
+              backgroundColor: "#232c53", // Set the header background color to white
+            },
             drawerItemStyle: { pointerEvents: 'none' },
             drawerLabel: () => null,
           }}
@@ -157,6 +160,9 @@ const NavigationDrawer = () => {
           name="NonAdmin"
           component={NonAdmin}
           options={{
+            headerStyle: {
+              backgroundColor: "#232c53", // Set the header background color to white
+            },
             drawerLabel: () => null,
             drawerItemStyle: { pointerEvents: 'none' },
           }}
@@ -165,6 +171,9 @@ const NavigationDrawer = () => {
           name="ModifEvenet"
           component={ModifScreen}
           options={{
+            headerStyle: {
+              backgroundColor: "#232c53", // Set the header background color to white
+            },
             drawerLabel: () => null,
             drawerItemStyle: { pointerEvents: 'none' },
           }}
