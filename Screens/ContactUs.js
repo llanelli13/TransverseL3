@@ -48,8 +48,7 @@ export default function ContactUs({ route }) {
         onChangeText={setMessage}
       />
       <Text style={styles.replyInfo}>
-        En cas de réponse nécessaire, un mail sera envoyé à l'adresse
-        {user.User_mail}.
+        En cas de réponse nécessaire, un mail sera envoyé à l'adresse {user.User_mail}.
       </Text>
       {showErrorMessage && (
         <Text style={styles.errorMessage}>
